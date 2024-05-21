@@ -7,8 +7,9 @@ class Game {
 
   render() {
     background(220)
+    this.table.render()
     this.ball.render()
     this.paddle.render()
-    // this.table.render()
+    
   }
 }
