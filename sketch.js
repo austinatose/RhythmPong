@@ -5,5 +5,6 @@ function setup() {
 
 function draw() {
   background(220)
-  game.render()
+  game.render(0.5)
+  // console.log(mouseX, mouseY)
 }
