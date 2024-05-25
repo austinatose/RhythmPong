@@ -1,5 +1,5 @@
 class Game {
-  constructor(interval) {
+  constructor(interval, song) {
     this.interval = 60/145 // 145 bpm
     this.ball = new Ball(width / 2 - 120, height / 2 - 310)
     this.table = new Table()
@@ -13,6 +13,18 @@ class Game {
     this.ballmovingtowardsplayer = true;
     this.score = 0;
     this.distance = 10000
+
+    this.song = song
+  }
+
+  run() {
+    // get rough bpm first, then future ball sendings's interval will be determined by this
+    // how to prevent straying off beat?
+    if (this.firstplay) {
+      this.song.play()
+      this.firstplay = false
+    }
+    this.render()
   }
 
   render() {
