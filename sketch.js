@@ -1,6 +1,7 @@
 let song;
 let startgame = false;
 let startbpmmode = false;
+let ontitle = true;
 
 function onSoundLoadError(e){
   console.log("load sound error",e);
@@ -8,11 +9,12 @@ function onSoundLoadError(e){
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-
+  title = new TitleScreen()
 }
 
 function draw() {
   background(220)
+  if (ontitle) title.render()
   if (startgame) {
     // console.log(obtainBPM(song))
     game.run()
@@ -25,8 +27,8 @@ function draw() {
 }
 
 function keyPressed() {
-  // soundPath = 'assets/TonightEN_RhythmHeavenFever.ogg'
-  soundPath = 'assets/cut1.m4a'
+  soundPath = 'assets/TonightEN_RhythmHeavenFever.ogg'
+  // psoundPath = 'assets/cut1.m4a'
   if (key === 'p') {
     song = loadSound(soundPath, onSoundLoadSuccess_bpm, onSoundLoadError)
     console.log("here")

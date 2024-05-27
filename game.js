@@ -1,6 +1,7 @@
 class Game {
   constructor(interval, song) {
-    this.interval = 60/145 // 145 bpm
+    // this.interval = 60/145 // 145 bpm
+    this.interval = 1
     this.ball = new Ball(width / 2 - 120, height / 2 - 310)
     this.table = new Table()
     this.paddle = new Paddle()
@@ -48,12 +49,13 @@ class Game {
     }
     if (this.init) {
       this.targetloc.y = height / 2 + 340
-      this.targetloc.x = width / 2 + random(-150, 150)
+      this.targetloc.x = width / 2 + random(-150, 150) // table tennis rules
+      if (this.missedlasttime) this.targetloc.x = width / 2 + random(0, 150)
       this.ball.determineVelocity(this.targetloc, this.interval)
       this.init = false
     }
     // return
-    if (this.ball.pos.x < this.paddle.x + 30 && this.ball.pos.x > this.paddle.x - 30 && this.ball.pos.y < this.paddle.y + 30 && this.ball.pos.y > this.paddle.y - 30 && !this.hit) { // collided
+    if (this.ball.pos.x < this.paddle.x + 30 && this.ball.pos.x > this.paddle.x - 30 && this.ball.pos.y < this.paddle.y + 30 && this.ball.pos.y > this.paddle.y - 30 && !this.hit && this.paddle.y > height/2) { // collided
       this.distance = dist(this.ball.pos.x, this.ball.pos.y, this.targetloc.x, this.targetloc.y)
       console.log("hit", this.distance)
       this.targetloc.y = height / 2 - 310

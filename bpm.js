@@ -5,7 +5,8 @@ class BPMobtainer {
 
     this.fft = new p5.FFT()
     this.fft.setInput(this.song)
-    this.PeakDetect = new p5.PeakDetect(20, 20000, 0.35, 20)
+    // this.PeakDetect = new p5.PeakDetect(100, 2000, 0.6, 20)
+    this.PeakDetect = new p5.PeakDetect(20, 20000, 0.7, 1)
 
     this.BD_MED = new BeatDetektor(85, 169)
     this.vu = new BeatDetektor.modules.vis.VU();
