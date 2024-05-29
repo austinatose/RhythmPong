@@ -3,7 +3,7 @@ class Game {
     // this.interval = 60/145 // 145 bpm
     this.interval = 1
     this.ball = new Ball(width / 2 - 120, height / 2 - 310)
-    this.table = new Table()
+    this.table = new Table(createVector(width / 2, height / 2))
     this.paddle = new Paddle()
     this.opponent = new Opponent()
     this.targetloc = createVector()
