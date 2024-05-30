@@ -4,6 +4,9 @@ let startbpmmode = false;
 let ontitle = true;
 let onmenu = false;
 
+let transitioning = false
+let transitionstartframe = 0
+
 function onSoundLoadError(e){
   console.log("load sound error",e);
 }
@@ -23,6 +26,7 @@ function draw() {
   background(220)
   if (ontitle) title.render()
   if (onmenu) menu.render()
+  if (transitioning) transition()
   if (startgame) {
     // console.log(obtainBPM(song))
     game.run()
@@ -34,12 +38,30 @@ function draw() {
   // console.log(mouseX, mouseY)
 }
 
+function transition() {
+  push()
+  fill(0, 0, 0, 255 * (frameCount - transitionstartframe) / 30)
+  if (frameCount - transitionstartframe > 30) {
+    fill(0, 0, 0, 255)
+  }
+  if (frameCount - transitionstartframe > 60) {
+    fill(0, 0, 0, 255 - 255 * (frameCount - transitionstartframe - 60) / 30)
+  }
+  rect(0, 0, width, height)
+  pop()
+  if (frameCount - transitionstartframe > 90) {
+    transitioning = false;
+    onmenu = true;
+  }
+}
+
 function keyPressed() {
   soundPath = 'assets/TonightEN_RhythmHeavenFever.ogg'
   // soundPath = 'assets/cut1.m4a'
   if (ontitle) {
     ontitle = false;
-    onmenu = true;
+    transitioning = true;
+    transitionstartframe = frameCount;
   }
   if (key === 'p') {
     song = loadSound(soundPath, onSoundLoadSuccess_bpm, onSoundLoadError)
