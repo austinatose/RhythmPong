@@ -7,8 +7,18 @@ let onmenu = false;
 let transitioning = false
 let transitionstartframe = 0
 
+let setlist = []
+
 function onSoundLoadError(e){
   console.log("load sound error",e);
+}
+
+function preload() {
+  titleentrysound = loadSound('assets/effects/mixkit-arcade-mechanical-bling-210.wav')
+  menuselectsound = loadSound('assets/effects/Menu-Selection-Change.mp3')
+  hitsound1 = loadSound('assets/effects/hitmarker_2.mp3')
+  misscombo = loadSound('assets/effects/misscombo.wav')
+  misscombo.volume(0.5)
 }
 
 function setup() {
@@ -20,6 +30,8 @@ function setup() {
   if (width < 2528 || height < 1539) {
     // alert user
   }
+
+  setlist.push(new SetlistItem("assets/TonightEN_RhythmHeavenFever.ogg", 145, "Normal"))
 }
 
 function draw() {
@@ -56,12 +68,14 @@ function transition() {
 }
 
 function keyPressed() {
-  soundPath = 'assets/TonightEN_RhythmHeavenFever.ogg'
+  soundPath = 'assets/songs/TonightEN_RhythmHeavenFever.ogg'
+  // soundPath = 'assets/songs/Hatsune Miku - Mythologia\'s End.mp3'
   // soundPath = 'assets/cut1.m4a'
   if (ontitle) {
     ontitle = false;
     transitioning = true;
     transitionstartframe = frameCount;
+    titleentrysound.play()
   }
   if (key === 'p') {
     song = loadSound(soundPath, onSoundLoadSuccess_bpm, onSoundLoadError)
@@ -80,6 +94,7 @@ function onSoundLoadSuccess_bpm(){
 }
 
 function onSoundLoadSuccess_game(){
+  menuselectsound.play()
   console.log("load sound success");
   game = new Game(0.5, song)
   startgame = true;
