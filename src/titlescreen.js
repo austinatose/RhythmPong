@@ -2,6 +2,7 @@ class TitleScreen {
   constructor() {
     this.table = new Table(createVector((height / 2 + 450) / 1.3, -width / 2 / 1.3)) // very cursed coordinates to fix rotation
     this.startframe = frameCount
+    this.firstplay = true
     this.diff = 1
     this.font = loadFont('assets/fonts/PantonRustHeavy-GrSh.ttf')
   }

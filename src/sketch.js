@@ -18,6 +18,7 @@ function preload() {
   menuselectsound = loadSound('assets/effects/Menu-Selection-Change.mp3')
   hitsound1 = loadSound('assets/effects/hitmarker_2.mp3')
   misscombo = loadSound('assets/effects/misscombo.wav')
+  titlesong = loadSound('assets/songs/cut1.m4a')
   misscombo.volume(0.5)
 }
 
@@ -48,6 +49,7 @@ function draw() {
   }
 
   // console.log(mouseX, mouseY)
+  console.log(frameRate())
 }
 
 function transition() {
@@ -68,9 +70,8 @@ function transition() {
 }
 
 function keyPressed() {
-  soundPath = 'assets/songs/TonightEN_RhythmHeavenFever.ogg'
-  // soundPath = 'assets/songs/Hatsune Miku - Mythologia\'s End.mp3'
-  // soundPath = 'assets/cut1.m4a'
+  // soundPath = 'assets/songs/TonightEN_RhythmHeavenFever.ogg'
+  soundPath = 'assets/songs/Hatsune Miku - Mythologia\'s End.mp3'
   if (ontitle) {
     ontitle = false;
     transitioning = true;
