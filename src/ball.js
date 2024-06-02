@@ -13,7 +13,7 @@ class Ball {
     ellipse(this.pos.x, this.pos.y, this.size, this.size)
     pop()
 
-    // trail
+    // TODO: trail
   }
 
   determineVelocity(target, interval) {
@@ -34,7 +34,7 @@ class Ball {
 
   move() {
     this.pos.add(this.vel)
-    ellipse(this.contactpoint.x, this.contactpoint.y, 10)
+     // ellipse(this.contactpoint.x, this.contactpoint.y, 10)
     this.size = dist(this.pos.x, this.pos.y, this.contactpoint.x, this.contactpoint.y) / 50 + 20
   }
 }

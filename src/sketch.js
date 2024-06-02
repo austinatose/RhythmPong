@@ -49,7 +49,6 @@ function draw() {
   }
 
   // console.log(mouseX, mouseY)
-  console.log(frameRate())
 }
 
 function transition() {
@@ -78,11 +77,11 @@ function keyPressed() {
     transitionstartframe = frameCount;
     titleentrysound.play()
   }
-  if (key === 'p') {
+  if (key === 'p' && !startgame && !startbpmmode) {
     song = loadSound(soundPath, onSoundLoadSuccess_bpm, onSoundLoadError)
     console.log("here")
   }
-  if (key === 'g') {
+  if (key === 'g' && !startgame && !startbpmmode) {
     song = loadSound(soundPath, onSoundLoadSuccess_game, onSoundLoadError)
     console.log("here")
   }

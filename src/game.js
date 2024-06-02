@@ -15,20 +15,54 @@ class Game {
     this.score = 0;
     this.distance = 10000
     this.combo = 0
-    this.firstplay = true
+    this.entry = true
+    this.firststart = true
+    this.startgame = false
+
+    this.elapsedbeats = 1
+    this.timerstarttime = 0
 
     this.song = song
   }
 
   run() {
-    // get rough bpm first, then future ball sendings's interval will be determined by this
-    // how to prevent straying off beat?
-    if (this.firstplay) {
-      this.song.play()
-      this.firstplay = false
-      console.log("this.song")
+    background(220)
+    if (this.entry) {
+      this.entry = false
+      // start game after 3 seconds
+      setTimeout(() => {this.startgame = true}, 3000)
     }
-    this.render()
+    if (this.startgame) {
+      if (this.firststart) {
+        // TODO: Wait 4 beats before starting
+        this.song.play()
+
+        this.timerstarttime = window.performance.now()
+        this.timer(this.checkhit.bind(this), this.interval * 1000 * 2) // does float work?
+        
+        this.firststart = false
+      }
+      this.render()
+    }
+  }
+
+  timer(f, m) { // custom timer, more accurate than setInterval
+    setInterval(function() {
+      var target_time = this.timerstarttime + m * this.elapsedbeats;
+      console.log(this.timerstarttime, this.elapsedbeats, target_time)
+      var margin = 17;
+      var now = window.performance.now();
+      console.log(target_time, now)
+      var dif = target_time - now;
+      if (dif < margin && dif > -margin) {
+        console.log("checkhit")
+        this.elapsedbeats++;
+        console.log(this.elapsedbeats)
+        f();
+      }
+      console.log(dif)
+    }.bind(this),
+    1);
   }
 
   render() {
@@ -57,6 +91,7 @@ class Game {
       if (this.missedlasttime) this.targetloc.x = width / 2 + random(0, 150)
       this.ball.determineVelocity(this.targetloc, this.interval)
       this.init = false
+      console.log("init")
     }
     // return
     if (this.ball.pos.x < this.paddle.x + 30 && this.ball.pos.x > this.paddle.x - 30 && this.ball.pos.y < this.paddle.y + 30 && this.ball.pos.y > this.paddle.y - 30 && !this.hit && this.paddle.y > height/2) { // collided
@@ -85,24 +120,25 @@ class Game {
       this.opponent.targetloc = this.targetloc
       this.opponent.move()
     }
-    if (frameCount - this.startframe == Math.round(this.interval * 60 * 2)) {      
-      if (this.hit) {
-        this.ball = new Ball(this.targetloc.x, height / 2 - 310, this.interval)
-        this.hit = false
-      } else { // if exceeded beat (missed ball)
-        this.ball = new Ball(width / 2 - 120, height / 2 - 310, this.interval) 
-        console.log("missed")
-        this.opponent.x = width / 2 - 120
-        this.missedlasttime = true
-        this.combo = 0
-        misscombo.play()
-      }
-      this.startframe = frameCount
-      this.init = true
-      this.ballmovingtowardsplayer = false
-      hitsound1.play()
-    }
   }
 
-  
+  checkhit() {
+    console.log("checkhit")
+    if (this.hit) {
+      this.ball = new Ball(this.targetloc.x, height / 2 - 310, this.interval)
+      this.hit = false
+    } else { // if exceeded beat (missed ball)
+      this.ball = new Ball(width / 2 - 120, height / 2 - 310, this.interval) 
+      // console.log("missed")
+      // console.log(this.opponent)
+      this.opponent.x = width / 2 - 120
+      this.missedlasttime = true
+      this.combo = 0
+      misscombo.play()
+    }
+    this.startframe = frameCount
+    this.init = true
+    this.ballmovingtowardsplayer = false
+    hitsound1.play()
+  }
 }
