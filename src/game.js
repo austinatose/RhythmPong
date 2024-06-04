@@ -1,8 +1,8 @@
 class Game {
   constructor(interval, song) {
     // this.interval = 60/145 // 145 bpm (tonight by tsunku)
-    // this.interval = 60/195 // 195 bpm (mythologia's end by hatsune miku)
-    this.interval = 60/200 // TTFAF
+    this.interval = 60/195 // 195 bpm (mythologia's end by hatsune miku)
+    // this.interval = 60/200 // TTFAF
     this.ball = new Ball(width / 2 - 120, height / 2 - 310)
     this.table = new Table(createVector(width / 2, height / 2))
     this.paddle = new Paddle()
@@ -33,13 +33,12 @@ class Game {
     if (this.entry) {
       this.entry = false
       // start game after 3 seconds
-      setTimeout(() => {this.startgame = true}, 3000)
+      // TODO: Wait 4 beats before starting
+      this.song.play()
+      setTimeout(() => {this.startgame = true}, this.interval * 4 * 1000)
     }
     if (this.startgame) {
       if (this.firststart) {
-        // TODO: Wait 4 beats before starting
-        this.song.play()
-
         this.timerstarttime = window.performance.now()
         this.timer(this.checkhit.bind(this), this.interval * 1000 * 2) // does float work?
         
@@ -53,7 +52,7 @@ class Game {
     setInterval(function() {
       var target_time = this.timerstarttime + m * this.elapsedbeats;
       console.log(this.timerstarttime, this.elapsedbeats, target_time)
-      var margin = 17;
+      var margin = 17; // 16.6666 milliseconds per frame for 60 fps
       var now = window.performance.now();
       console.log(target_time, now)
       var dif = target_time - now;
@@ -137,7 +136,7 @@ class Game {
       this.opponent.x = width / 2 - 120
       this.missedlasttime = true
       this.combo = 0
-      // misscombo.play()
+      misscombo.play()
     }
     this.startframe = frameCount
     this.init = true

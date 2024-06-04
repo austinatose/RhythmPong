@@ -69,8 +69,8 @@ function transition() {
 }
 
 function keyPressed() {
-  soundPath = 'assets/songs/TonightEN_RhythmHeavenFever.ogg'
-  // soundPath = 'assets/songs/Hatsune Miku - Mythologia\'s End.mp3'
+  // soundPath = 'assets/songs/TonightEN_RhythmHeavenFever.ogg'
+  soundPath = 'assets/songs/Hatsune Miku - Mythologia\'s End.mp3'
   // soundPath = 'assets/songs/DragonForce - Through the Fire and Flames.ogg'
   if (ontitle) {
     ontitle = false;
