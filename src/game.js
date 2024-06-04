@@ -19,8 +19,9 @@ class Game {
     this.entry = true
     this.firststart = true
     this.startgame = false
-    this.font = loadFont('assets/fonts/Panton-Trial-Regular.ttf')
-    textFont(this.font)
+    this.countingdown = false
+    this.countdownbeat = 4
+    textFont(regfont)
 
     this.elapsedbeats = 1
     this.timerstarttime = 0
@@ -29,15 +30,20 @@ class Game {
   }
 
   run() {
-    background(220)
     if (this.entry) {
       this.entry = false
       // start game after 3 seconds
       // TODO: Wait 4 beats before starting
       this.song.play()
+      this.countingdown = true
       setTimeout(() => {this.startgame = true}, this.interval * 4 * 1000)
+      setInterval(() => {this.countdownbeat--}, this.interval * 1000)
+    }
+    if (this.countingdown) {
+      this.countdown()
     }
     if (this.startgame) {
+      this.countingdown = false
       if (this.firststart) {
         this.timerstarttime = window.performance.now()
         this.timer(this.checkhit.bind(this), this.interval * 1000 * 2) // does float work?
@@ -51,20 +57,31 @@ class Game {
   timer(f, m) { // custom timer, more accurate than setInterval
     setInterval(function() {
       var target_time = this.timerstarttime + m * this.elapsedbeats;
-      console.log(this.timerstarttime, this.elapsedbeats, target_time)
+      // console.log(this.timerstarttime, this.elapsedbeats, target_time)
       var margin = 17; // 16.6666 milliseconds per frame for 60 fps
       var now = window.performance.now();
-      console.log(target_time, now)
+      // console.log(target_time, now)
       var dif = target_time - now;
       if (dif < margin && dif > -margin) {
-        console.log("checkhit")
+        // console.log("checkhit")
         this.elapsedbeats++;
-        console.log(this.elapsedbeats)
+        // console.log(this.elapsedbeats)
         f();
       }
-      console.log(dif)
+      // console.log(dif)
     }.bind(this),
     1);
+  }
+
+  countdown() {
+    background(220)
+    push()
+    // textFont(loadFont('assets/fonts/Panton-Regular.ttf'))
+    textFont(boldfont)
+    textSize(250)
+    textAlign(CENTER)
+    text(this.countdownbeat, width / 2, height / 2)
+    pop()
   }
 
   render() {

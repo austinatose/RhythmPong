@@ -19,6 +19,8 @@ function preload() {
   hitsound1 = loadSound('assets/effects/hitmarker_2.mp3')
   misscombo = loadSound('assets/effects/misscombo.wav')
   titlesong = loadSound('assets/songs/cut1.m4a')
+  regfont = loadFont('assets/fonts/Panton-Regular.ttf')
+  boldfont = loadFont('assets/fonts/Panton-Bold.ttf')
   misscombo.volume(0.5)
 }
 

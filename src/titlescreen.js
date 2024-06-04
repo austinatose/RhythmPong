@@ -5,7 +5,6 @@ class TitleScreen {
     this.startframe = frameCount
     this.firstplay = true
     this.diff = 1
-    this.font = loadFont('assets/fonts/Panton-Bold.ttf')
   }
 
   render() {
@@ -16,7 +15,7 @@ class TitleScreen {
 
     // push()
     // translate(width * 0.0138449367, -height * 0.0584795322) // small position tweaks
-    // textFont(this.font)
+    // textFont(boldfont)
     // textSize(250)
     // rotate(-PI / 12)
     // text("Rhythm", width / 2 - 800, height / 2)
@@ -32,7 +31,7 @@ class TitleScreen {
     pop()
 
     push()
-    textFont(this.font)
+    textFont(boldfont)
     textAlign(CENTER)
     textSize(125)
     text("Rhythm Pong", width / 2, height / 2 - 200)
@@ -54,7 +53,7 @@ class TitleScreen {
     pop()
 
     push()
-    textFont(this.font)
+    textFont(boldfont)
     textSize(50)
     textAlign(CENTER)
     text("> Press any key to start <", width / 2, height / 2 + 465)
