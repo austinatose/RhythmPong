@@ -8,6 +8,8 @@ class MenuItem {
     this.pos = pos
     this.selected = false
     this.length = 800
+    this.offset = 0
+    this.targetpos = pos
   }
 
   render() {
@@ -17,7 +19,7 @@ class MenuItem {
     pop()
 
     push()
-    if (this.length == 400) translate(-100, 0) // TODO: do i want this?
+    translate(this.offset, 0)
     textSize(30)
     textFont(boldfont)
     textAlign(LEFT)
@@ -26,5 +28,13 @@ class MenuItem {
     textFont(regfont)
     text(this.artist, this.pos.x + 100, this.pos.y + 100)
     pop()
+  }
+
+  move() {
+    // this.pos = lerp(this.pos, this.targetpos, 0.1)
+    // this.pos.add(this.targetpos.sub(this.pos).mult(0.1))
+    this.pos.x += (this.targetpos.x - this.pos.x) * 0.1
+    this.pos.y += (this.targetpos.y - this.pos.y) * 0.1
+    console.log(this.pos.x, this.targetpos.x, this.pos.x - this.targetpos.x)
   }
 }
