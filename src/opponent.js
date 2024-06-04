@@ -6,6 +6,7 @@ class Opponent {
     this.targetloc = createVector()
     this.color = 'blue'
     this.invert = false
+    this.rotoffset = 0 // for emergencies
   }
 
   move() {
@@ -17,7 +18,7 @@ class Opponent {
     translate(this.x, this.y)
     let rotationAngle = -(this.middle - this.x - 80) / 400
     constrain(rotationAngle, -0.5625, 0.5625)
-    rotate(rotationAngle + PI)
+    rotate(rotationAngle + PI + this.rotoffset)
     if (this.invert)
       rotate(PI)
     strokeWeight(8)

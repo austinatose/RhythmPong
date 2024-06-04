@@ -45,6 +45,7 @@ class TitleScreen {
     // pop()
 
     push()
+    // what is going on with these coordinates (it ain't broken, don't fix it)
     translate(width / 2, height / 2) // move origin top
     translate(0, 150)
     rotate(PI/2)

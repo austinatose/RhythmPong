@@ -21,20 +21,23 @@ function preload() {
   titlesong = loadSound('assets/songs/cut1.m4a')
   regfont = loadFont('assets/fonts/Panton-Regular.ttf')
   boldfont = loadFont('assets/fonts/Panton-Bold.ttf')
-  misscombo.volume(0.5)
+  misscombo.setVolume(0.5)
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   title = new TitleScreen()
-  menu = new Menu()
+  setlist.push(new SetlistItem("assets/songs/TonightEN_RhythmHeavenFever.ogg", 145, "Tonight", "Tsunku", "Normal"))
+  setlist.push(new SetlistItem("assets/songs/Hatsune Miku - Mythologia's End.mp3", 195, "Mythologia's End", "Hatsune Miku", "Hard"))
+  setlist.push(new SetlistItem("assets/songs/DragonForce - Through the Fire and Flames.ogg", 200, "Through the Fire and Flames", "DragonForce", "Expert"))
+  setlist.push(new SetlistItem("assets/songs/YOASOBI - Racing Into The Night.mp3", 130, "Racing Into The Night", "YOASOBI", "Normal"))
+  setlist.push(new SetlistItem("assets/songs/Alstroemeria Records feat. nomico - Bad Apple!!.mp3", 138, "Bad Apple", "Alstroemeria Records feat. nomico", "Normal"))
+  menu = new Menu(setlist)
 
   // find out valid screen size in the future
   if (width < 2528 || height < 1539) {
     // alert user
   }
-
-  setlist.push(new SetlistItem("assets/TonightEN_RhythmHeavenFever.ogg", 145, "Normal"))
 }
 
 function draw() {

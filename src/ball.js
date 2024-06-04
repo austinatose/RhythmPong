@@ -20,6 +20,8 @@ class Ball {
     // target: width / 2 + 50, height / 2 + 50
     this.vel.x = (target.x - this.pos.x) / (interval * 60)
     this.vel.y = (target.y - this.pos.y) / (interval * 60)
+
+    // could have used lerp
     if (this.pos.y < height / 2) { // opponent serving
       this.contactpoint.y = this.pos.y + abs(this.pos.y - target.y) * 0.70
     } else {
