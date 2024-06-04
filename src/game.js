@@ -1,7 +1,8 @@
 class Game {
   constructor(interval, song) {
     // this.interval = 60/145 // 145 bpm (tonight by tsunku)
-    this.interval = 60/195 // 195 bpm (mythologia's end by hatsune miku)
+    // this.interval = 60/195 // 195 bpm (mythologia's end by hatsune miku)
+    this.interval = 60/200 // TTFAF
     this.ball = new Ball(width / 2 - 120, height / 2 - 310)
     this.table = new Table(createVector(width / 2, height / 2))
     this.paddle = new Paddle()
@@ -18,6 +19,8 @@ class Game {
     this.entry = true
     this.firststart = true
     this.startgame = false
+    this.font = loadFont('assets/fonts/Panton-Trial-Regular.ttf')
+    textFont(this.font)
 
     this.elapsedbeats = 1
     this.timerstarttime = 0
@@ -134,7 +137,7 @@ class Game {
       this.opponent.x = width / 2 - 120
       this.missedlasttime = true
       this.combo = 0
-      misscombo.play()
+      // misscombo.play()
     }
     this.startframe = frameCount
     this.init = true
