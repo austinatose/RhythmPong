@@ -1,8 +1,9 @@
 class Game {
   constructor(interval, song) {
     // this.interval = 60/145 // 145 bpm (tonight by tsunku)
-    this.interval = 60/195 // 195 bpm (mythologia's end by hatsune miku)
+    // this.interval = 60/195 // 195 bpm (mythologia's end by hatsune miku)
     // this.interval = 60/200 // TTFAF
+    this.interval = interval
     this.ball = new Ball(width / 2 - 120, height / 2 - 310)
     this.table = new Table(createVector(width / 2, height / 2))
     this.paddle = new Paddle()

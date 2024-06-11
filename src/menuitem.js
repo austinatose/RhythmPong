@@ -19,7 +19,7 @@ class MenuItem {
     pop()
 
     push()
-    translate(this.offset, 0)
+    translate(-this.targetpos.x-75, 0)
     textSize(30)
     textFont(boldfont)
     textAlign(LEFT)
@@ -35,6 +35,6 @@ class MenuItem {
     // this.pos.add(this.targetpos.sub(this.pos).mult(0.1))
     this.pos.x += (this.targetpos.x - this.pos.x) * 0.1
     this.pos.y += (this.targetpos.y - this.pos.y) * 0.1
-    console.log(this.pos.x, this.targetpos.x, this.pos.x - this.targetpos.x)
+    // console.log(this.pos.x, this.targetpos.x, this.pos.x - this.targetpos.x)
   }
 }

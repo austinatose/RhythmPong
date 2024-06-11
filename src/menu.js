@@ -11,6 +11,7 @@ class Menu {
     this.songpreview = null;
     this.isloadingsong = false;
     this.needstomove = false;
+    this.canstart = true;
     console.log(this.setlist);
   }
 
@@ -51,7 +52,7 @@ class Menu {
       }
       // animation
       // this.menuitems[i].pos.x -= 400 - 200 * abs(this.lastselected - i);
-      if (this.needstomove) this.menuitems[i].targetpos = createVector(this.menuitems[i].pos.x - 400 - 200 * abs(this.lastselected - i), height/2 - 75 - (this.lastselected - i) * 150);
+      if (this.needstomove) this.menuitems[i].targetpos = createVector(-75 - 75 * abs(this.lastselected - i), height/2 - 75 - (this.lastselected - i) * 150); 
       this.menuitems[i].move();
       this.menuitems[i].render();
     }
@@ -87,9 +88,52 @@ class Menu {
     rect(50, height - 50, 50, 50, 5)
     pop()
 
+    // info
+    push()
+    textSize(20)
+    textAlign(LEFT)
+    textFont(regfont)
+    text("BPM: " + this.setlist[this.lastselected].bpm, 10, 20)
+    text("Difficulty: " + this.setlist[this.lastselected].difficulty, 10, 40)
+    pop()
+
+    // play button along top of screen
+    push()
+    strokeWeight(5)
+    rectMode(CENTER)
+    rect(width / 2 - 100, height - 25, 400, 50, 5)
+    pop()
+    push()
+    textSize(25)
+    textAlign(CENTER)
+    textFont(boldfont)
+    text("Play with this Song!", width / 2 - 100, height - 20)
+    pop()
+
+    this.checkforplay();
+
     // err
     this.demo.opponent2.rotoffset = -PI/2
     this.demo.opponent2.invert = false
     this.demo.render();
+  }
+
+  checkforplay() {
+    if (mouseX > width / 2 - 200 && mouseX < width / 2 + 200 && mouseY > height - 50 && mouseY < height && mouseIsPressed && this.canstart) {
+      this.songpreview.stop();
+      this.canstart = false;
+      // console.log("play")
+      startgamesound.play();
+      // startgame = true;
+      // onmenu = false;
+      // transitioning = true;
+      // transitionstartframe = frameCount;
+      selecteditem = setlist[this.lastselected];
+      song = loadSound(selecteditem.song, onSoundLoadSuccess_game, onSoundLoadError)
+      console.log("start game with song: " + selecteditem.song)
+      // titleentrysound.play()
+      background(0)
+
+    }
   }
 }

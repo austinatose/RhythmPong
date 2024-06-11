@@ -3,6 +3,7 @@ let startgame = false;
 let startbpmmode = false;
 let ontitle = true;
 let onmenu = false;
+let selecteditem = null;
 
 let transitioning = false
 let transitionstartframe = 0
@@ -19,6 +20,7 @@ function preload() {
   hitsound1 = loadSound('assets/effects/hitmarker_2.mp3')
   misscombo = loadSound('assets/effects/misscombo.wav')
   titlesong = loadSound('assets/songs/cut1.m4a')
+  startgamesound = loadSound('assets/effects/startgame.wav')
   regfont = loadFont('assets/fonts/Panton-Regular.ttf')
   boldfont = loadFont('assets/fonts/Panton-Bold.ttf')
   misscombo.setVolume(0.5)
@@ -26,6 +28,7 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  camera.zoom = 1.6
   title = new TitleScreen()
   setlist.push(new SetlistItem("assets/songs/TonightEN_RhythmHeavenFever.ogg", 145, "Tonight", "Tsunku", "Normal"))
   setlist.push(new SetlistItem("assets/songs/Hatsune Miku - Mythologia's End.mp3", 195, "Mythologia's End", "Hatsune Miku", "Hard"))
@@ -41,7 +44,15 @@ function setup() {
 }
 
 function draw() {
+  frameRate(60)
   background(220)
+  // translate(width / 2 - width / 1.3 / 2, height / 2 - height / 1.3 / 2)
+  // resizeCanvas(windowWidth / 1.6, windowHeight / 1.6)
+  // translate(width / 2, height / 2)
+  // scale(1.6)
+  // translate(-width / 2, -height / 2)
+
+  // console.log(width, height)
   if (ontitle) title.render()
   if (onmenu) menu.render()
   if (transitioning) transition()
@@ -53,6 +64,7 @@ function draw() {
     bpm.obtainBPM()
   }
 
+  // console.log(frameRate())
   // console.log(mouseX, mouseY)
 }
 
@@ -100,8 +112,7 @@ function onSoundLoadSuccess_bpm(){
 }
 
 function onSoundLoadSuccess_game(){
-  menuselectsound.play()
   console.log("load sound success");
-  game = new Game(0.5, song)
+  game = new Game(60 / selecteditem.bpm, song)
   startgame = true;
 }
