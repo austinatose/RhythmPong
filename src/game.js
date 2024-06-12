@@ -91,9 +91,11 @@ class Game {
     this.ball.render()
     this.paddle.render()
     this.opponent.render()
-    text(this.distance, 100, 100)
-    text(this.score, 100, 200)
-    text(this.combo, 100, 250)
+
+    push()
+    textSize(50)
+    text("Score: " + this.score, 100, 220)
+    text("Combo: " + this.combo, 100, 290)
     if (this.missedlasttime) {
       text("Missed", 100, 150)
     } else if (this.distance < 25) {
@@ -105,6 +107,8 @@ class Game {
     } else {
       text("Bad", 100, 150)
     }
+    pop()
+
     if (this.init) {
       this.targetloc.y = height / 2 + 340
       this.targetloc.x = width / 2 + random(-150, 150) // table tennis rules
@@ -115,9 +119,9 @@ class Game {
     }
     // return
     if (this.ball.pos.x < this.paddle.x + 30 && this.ball.pos.x > this.paddle.x - 30 && this.ball.pos.y < this.paddle.y + 30 && this.ball.pos.y > this.paddle.y - 30 && !this.hit && this.paddle.y > height/2) { // collided
+      // hitsound1.play()
       this.distance = dist(this.ball.pos.x, this.ball.pos.y, this.targetloc.x, this.targetloc.y)
       console.log("hit", this.distance)
-      hitsound1.play()
       this.targetloc.y = height / 2 - 310
       this.targetloc.x = width / 2 + random(-150, 150) // -150 to 150
       this.ball.determineVelocity(this.targetloc, (this.interval * 60 * 2 - frameCount + this.startframe) / 60)
@@ -134,7 +138,9 @@ class Game {
         this.combo = 0;
         misscombo.play()
       }
+      this.score += Math.round((300 - this.distance) * (1 + this.combo/50)) // each combo gives 2% score boost
     }
+
     this.ball.move()
     if (this.ballmovingtowardsplayer) {
       this.opponent.targetloc = this.targetloc
@@ -143,6 +149,7 @@ class Game {
   }
 
   checkhit() {
+    // hitsound1.play()
     console.log("checkhit")
     if (this.hit) {
       this.ball = new Ball(this.targetloc.x, height / 2 - 310, this.interval)
@@ -159,6 +166,5 @@ class Game {
     this.startframe = frameCount
     this.init = true
     this.ballmovingtowardsplayer = false
-    hitsound1.play()
   }
 }

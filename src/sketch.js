@@ -15,6 +15,7 @@ function onSoundLoadError(e){
 }
 
 function preload() {
+  soundFormats('mp3', 'wav')
   titleentrysound = loadSound('assets/effects/mixkit-arcade-mechanical-bling-210.wav')
   menuselectsound = loadSound('assets/effects/Menu-Selection-Change.mp3')
   hitsound1 = loadSound('assets/effects/hitmarker_2.mp3')
@@ -30,9 +31,9 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   camera.zoom = 1.6
   title = new TitleScreen()
-  setlist.push(new SetlistItem("assets/songs/TonightEN_RhythmHeavenFever.ogg", 145, "Tonight", "Tsunku", "Normal"))
+  setlist.push(new SetlistItem("assets/songs/TonightEN_RhythmHeavenFever.mp3", 145, "Tonight", "Tsunku", "Normal"))
   setlist.push(new SetlistItem("assets/songs/Hatsune Miku - Mythologia's End.mp3", 195, "Mythologia's End", "Hatsune Miku", "Hard"))
-  setlist.push(new SetlistItem("assets/songs/DragonForce - Through the Fire and Flames.ogg", 200, "Through the Fire and Flames", "DragonForce", "Expert"))
+  setlist.push(new SetlistItem("assets/songs/DragonForce - Through the Fire and Flames.mp3", 200, "Through the Fire and Flames", "DragonForce", "Expert"))
   setlist.push(new SetlistItem("assets/songs/YOASOBI - Racing Into The Night.mp3", 130, "Racing Into The Night", "YOASOBI", "Normal"))
   setlist.push(new SetlistItem("assets/songs/Alstroemeria Records feat. nomico - Bad Apple!!.mp3", 138, "Bad Apple", "Alstroemeria Records feat. nomico", "Normal"))
   menu = new Menu(setlist)
@@ -85,22 +86,16 @@ function transition() {
   }
 }
 
-function keyPressed() {
-  // soundPath = 'assets/songs/TonightEN_RhythmHeavenFever.ogg'
-  soundPath = 'assets/songs/Hatsune Miku - Mythologia\'s End.mp3'
-  // soundPath = 'assets/songs/DragonForce - Through the Fire and Flames.ogg'
+function keyPressed() { // for debug
   if (ontitle) {
+    titleentrysound.play()
     ontitle = false;
     transitioning = true;
     transitionstartframe = frameCount;
-    titleentrysound.play()
   }
   if (key === 'p' && !startgame && !startbpmmode) {
+    soundFormats('mp3', 'wav')
     song = loadSound(soundPath, onSoundLoadSuccess_bpm, onSoundLoadError)
-    console.log("here")
-  }
-  if (key === 'g' && !startgame && !startbpmmode) {
-    song = loadSound(soundPath, onSoundLoadSuccess_game, onSoundLoadError)
     console.log("here")
   }
 }
