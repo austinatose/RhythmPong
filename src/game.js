@@ -20,12 +20,14 @@ class Game {
     this.entry = true
     this.firststart = true
     this.startgame = false
+    this.endgame = false
     this.countingdown = false
     this.countdownbeat = 4
     textFont(regfont)
 
     this.elapsedbeats = 1
     this.timerstarttime = 0
+    this.timerhelper = null
 
     this.song = song
   }
@@ -33,9 +35,8 @@ class Game {
   run() {
     if (this.entry) {
       this.entry = false
-      // start game after 3 seconds
-      // TODO: Wait 4 beats before starting
       this.song.play()
+      this.song.onended(this.handleEnd.bind(this));
       this.countingdown = true
       setTimeout(() => {this.startgame = true}, this.interval * 4 * 1000)
       setInterval(() => {this.countdownbeat--}, this.interval * 1000)
@@ -43,6 +44,7 @@ class Game {
     if (this.countingdown) {
       this.countdown()
     }
+    console.log(this.startgame, this.endgame)
     if (this.startgame) {
       this.countingdown = false
       if (this.firststart) {
@@ -53,10 +55,14 @@ class Game {
       }
       this.render()
     }
+    if (this.endgame) {
+      console.log("end received")
+      this.renderEndScreen()
+    }
   }
 
   timer(f, m) { // custom timer, more accurate than setInterval
-    setInterval(function() {
+    this.timerhelper = setInterval(function() {
       var target_time = this.timerstarttime + m * this.elapsedbeats;
       // console.log(this.timerstarttime, this.elapsedbeats, target_time)
       var margin = 17; // 16.6666 milliseconds per frame for 60 fps
@@ -110,7 +116,7 @@ class Game {
     pop()
 
     if (this.init) {
-      this.targetloc.y = height / 2 + 340
+      this.targetloc.y = height / 2 + 360
       this.targetloc.x = width / 2 + random(-150, 150) // table tennis rules
       if (this.missedlasttime) this.targetloc.x = width / 2 + random(0, 150)
       this.ball.determineVelocity(this.targetloc, this.interval)
@@ -162,9 +168,28 @@ class Game {
       this.missedlasttime = true
       this.combo = 0
       misscombo.play()
+      console.log("missed in checkhit")
     }
     this.startframe = frameCount
     this.init = true
     this.ballmovingtowardsplayer = false
+  }
+
+  renderEndScreen() {
+    background(220)
+    push()
+    textSize(100)
+    textAlign(CENTER)
+    text("Game Over", width / 2, height / 2)
+    textSize(50)
+    text("Score: " + this.score, width / 2, height / 2 + 100)
+    pop()
+  }
+
+  handleEnd() {
+    this.startgame = false
+    this.endgame = true
+    console.log("end")
+    clearInterval(this.timerhelper)
   }
 }

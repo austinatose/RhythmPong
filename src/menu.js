@@ -4,13 +4,13 @@ class Menu {
     this.demo = null
     this.setlist = setlist; // Setlist object
     this.init = true;
-    this.lastselected = 2;
-    this.newlastselected = 2;
+    this.lastselected = 0;
+    this.newlastselected = 0;
     this.delay = false;
     this.delaystartframe = 0;
     this.songpreview = null;
     this.isloadingsong = false;
-    this.needstomove = false;
+    this.needstomove = true;
     this.canstart = true;
     console.log(this.setlist);
   }
@@ -63,7 +63,7 @@ class Menu {
       this.lastselected = this.newlastselected;
       this.songpreview.stop();
       this.demo = new Demo(width/2 + 400, height/2, 60/this.setlist[this.lastselected].bpm);
-      this.songpreview = loadSound(this.setlist[this.lastselected].song, () => {this.songpreview.playMode('restart'); this.songpreview.play(); this.isloadingsong = false}, () => {console.log("error loading song")});
+      this.songpreview = loadSound(this.setlist[this.lastselected].song, () => {this.songpreview.playMode('restart'); this.songpreview.play(); this.isloadingsong = false; this.canstart = true}, () => {console.log("error loading song")});
       this.isloadingsong = true;
       this.needstomove = true;
     }
@@ -78,6 +78,7 @@ class Menu {
       textAlign(CENTER)
       textFont(regfont)
       text("Loading song...", width/2, height/2)
+      this.canstart = false;
       pop()
     }
     

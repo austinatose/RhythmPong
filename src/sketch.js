@@ -3,6 +3,7 @@ let startgame = false;
 let startbpmmode = false;
 let ontitle = true;
 let onmenu = false;
+
 let selecteditem = null;
 
 let transitioning = false
@@ -15,7 +16,7 @@ function onSoundLoadError(e){
 }
 
 function preload() {
-  soundFormats('mp3', 'wav')
+  soundFormats('mp3', 'wav', 'm4a')
   titleentrysound = loadSound('assets/effects/mixkit-arcade-mechanical-bling-210.wav')
   menuselectsound = loadSound('assets/effects/Menu-Selection-Change.mp3')
   hitsound1 = loadSound('assets/effects/hitmarker_2.mp3')
@@ -36,6 +37,7 @@ function setup() {
   setlist.push(new SetlistItem("assets/songs/DragonForce - Through the Fire and Flames.mp3", 200, "Through the Fire and Flames", "DragonForce", "Expert"))
   setlist.push(new SetlistItem("assets/songs/YOASOBI - Racing Into The Night.mp3", 130, "Racing Into The Night", "YOASOBI", "Normal"))
   setlist.push(new SetlistItem("assets/songs/Alstroemeria Records feat. nomico - Bad Apple!!.mp3", 138, "Bad Apple", "Alstroemeria Records feat. nomico", "Normal"))
+  setlist.push(new SetlistItem("assets/songs/shortcut1.mp3", 140, "debugsong", "me", "Normal"))
   menu = new Menu(setlist)
 
   // find out valid screen size in the future
