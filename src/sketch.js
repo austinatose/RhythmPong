@@ -32,12 +32,16 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   camera.zoom = 1.6
   title = new TitleScreen()
-  setlist.push(new SetlistItem("assets/songs/TonightEN_RhythmHeavenFever.mp3", 145, "Tonight", "Tsunku", "Normal"))
-  setlist.push(new SetlistItem("assets/songs/Hatsune Miku - Mythologia's End.mp3", 195, "Mythologia's End", "Hatsune Miku", "Hard"))
-  setlist.push(new SetlistItem("assets/songs/DragonForce - Through the Fire and Flames.mp3", 200, "Through the Fire and Flames", "DragonForce", "Expert"))
+  setlist.push(new SetlistItem("assets/songs/xi - Freedom Dive.mp3", 111.11, "Freedom Dive (Easy)", "xi", "Easy"))
+  setlist.push(new SetlistItem("assets/songs/Deep Purple - Smoke on the Water.mp3", 115, "Smoke on the Water", "Deep Purple", "Easy"))
   setlist.push(new SetlistItem("assets/songs/YOASOBI - Racing Into The Night.mp3", 130, "Racing Into The Night", "YOASOBI", "Normal"))
   setlist.push(new SetlistItem("assets/songs/Alstroemeria Records feat. nomico - Bad Apple!!.mp3", 138, "Bad Apple", "Alstroemeria Records feat. nomico", "Normal"))
-  setlist.push(new SetlistItem("assets/songs/shortcut1.mp3", 140, "debugsong", "me", "Normal"))
+  setlist.push(new SetlistItem("assets/songs/shortcut1.mp3", 140, "Very Short Song (10s)", "if you want to see the end screen without playing the game", "Normal"))
+  setlist.push(new SetlistItem("assets/songs/TonightEN_RhythmHeavenFever.mp3", 145, "Tonight (From Rhythm Heaven Fever)", "Tsunku", "Normal"))
+  setlist.push(new SetlistItem("assets/songs/Siromaru - Conflict.mp3", 160, "Conflict", "Siromaru", "Hard"))
+  setlist.push(new SetlistItem("assets/songs/Hatsune Miku - Mythologia's End.mp3", 195, "Mythologia's End", "Hatsune Miku", "Hard"))
+  setlist.push(new SetlistItem("assets/songs/DragonForce - Through the Fire and Flames.mp3", 200, "Through the Fire and Flames", "DragonForce", "Expert"))
+  setlist.push(new SetlistItem("assets/songs/xi - Freedom Dive.mp3", 222.22, "Freedom Dive (Expert)", "xi", "Expert"))  
   menu = new Menu(setlist)
 
   // find out valid screen size in the future

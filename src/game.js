@@ -7,6 +7,9 @@ class Game {
     this.ball = new Ball(width / 2 - 120, height / 2 - 310)
     this.table = new Table(createVector(width / 2, height / 2))
     this.paddle = new Paddle()
+    this.fireeffect = new Fire(100, 150)
+    this.hiteffect = new HitEffect(100, 150)
+    this.hiteffectrendertime = 0
     this.opponent = new Opponent()
     this.targetloc = createVector()
     this.init = true;
@@ -98,22 +101,39 @@ class Game {
     this.paddle.render()
     this.opponent.render()
 
+    // this.screenShake()
+
     push()
     textSize(50)
     text("Score: " + this.score, 100, 220)
     text("Combo: " + this.combo, 100, 290)
+    textFont(boldfont)
     if (this.missedlasttime) {
+      fill('red')
       text("Missed", 100, 150)
     } else if (this.distance < 25) {
-      text("Perfect", 100, 150)
+      fill('green')
+      text("Perfect", 100, 175) // TODO: generate particles when perfect (or all the time)
     } else if (this.distance < 60) {
+      fill('green')
       text("Good", 100, 150)
     } else if (this.distance < 100) {
+      fill('purple')
       text("Ok", 100, 150)
     } else {
+      fill('indigo')
       text("Bad", 100, 150)
     }
     pop()
+
+    if (this.combo >= 5) {
+      push()
+      this.fireeffect.dramaticness = floor((this.combo - 4) / 2)
+      this.fireeffect.x = mouseX
+      this.fireeffect.y = mouseY + 25
+      this.fireeffect.render()
+      pop()
+    }
 
     if (this.init) {
       this.targetloc.y = height / 2 + 360
@@ -125,7 +145,7 @@ class Game {
     }
     // return
     if (this.ball.pos.x < this.paddle.x + 30 && this.ball.pos.x > this.paddle.x - 30 && this.ball.pos.y < this.paddle.y + 30 && this.ball.pos.y > this.paddle.y - 30 && !this.hit && this.paddle.y > height/2) { // collided
-      // hitsound1.play()
+      hitsound1.play()
       this.distance = dist(this.ball.pos.x, this.ball.pos.y, this.targetloc.x, this.targetloc.y)
       console.log("hit", this.distance)
       this.targetloc.y = height / 2 - 310
@@ -145,6 +165,12 @@ class Game {
         misscombo.play()
       }
       this.score += Math.round((300 - this.distance) * (1 + this.combo/50)) // each combo gives 2% score boost
+
+      // hit effect
+      this.hiteffectrendertime = 10
+      this.hiteffect.x = this.ball.pos.x
+      this.hiteffect.y = this.ball.pos.y
+      this.hiteffect.particles = []
     }
 
     this.ball.move()
@@ -152,10 +178,26 @@ class Game {
       this.opponent.targetloc = this.targetloc
       this.opponent.move()
     }
+
+    if (this.hiteffectrendertime > 0) {
+      this.hiteffectrendertime--
+      this.hiteffect.x = this.ball.pos.x
+      this.hiteffect.y = this.ball.pos.y
+      this.hiteffect.vx = this.ball.vel.x
+      this.hiteffect.vy = this.ball.vel.y
+      this.hiteffect.render()
+    }
   }
 
+  // screenShake() {
+  //   // screen shake intensifies based on combo
+  //   if (this.combo > 0) {
+  //     translate(random(-this.combo, this.combo), random(-this.combo, this.combo))
+  //   }
+  // }
+
   checkhit() {
-    // hitsound1.play()
+    hitsound1.play()
     console.log("checkhit")
     if (this.hit) {
       this.ball = new Ball(this.targetloc.x, height / 2 - 310, this.interval)
@@ -170,6 +212,12 @@ class Game {
       misscombo.play()
       console.log("missed in checkhit")
     }
+    // hit effect
+    this.hiteffectrendertime = 10
+    this.hiteffect.x = this.ball.pos.x
+    this.hiteffect.y = this.ball.pos.y
+    this.hiteffect.particles = []
+
     this.startframe = frameCount
     this.init = true
     this.ballmovingtowardsplayer = false
