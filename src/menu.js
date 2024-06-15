@@ -38,6 +38,10 @@ class Menu {
       }
       // this.menuitems[i].pos.x = lerp(this.menuitems[i].pos.x, height/2 - 75 - (this.lastselected - i) * 150, 0.1);
       // this.menuitems[i].pos.y = height/2 - 75 - (this.lastselected - i) * 150;
+      if (mouseX > this.menuitems[i].pos.x && mouseX < this.menuitems[i].pos.x + 800 && mouseY > this.menuitems[i].pos.y && mouseY < this.menuitems[i].pos.y + 150) {
+        // highlight
+        this.menuitems[i].highlight();
+      }
       if (mouseX > this.menuitems[i].pos.x && mouseX < this.menuitems[i].pos.x + 800 && mouseY > this.menuitems[i].pos.y && mouseY < this.menuitems[i].pos.y + 150 && mouseIsPressed && !this.delay) {
         // console.log("focus shifted")
         menuselectsound.play();
@@ -98,7 +102,18 @@ class Menu {
     text("Difficulty: " + this.setlist[this.lastselected].difficulty, 10, 40)
     pop()
 
-    // play button along top of screen
+    // play button along bottom of screen
+    // highlight
+    if (mouseX > width / 2 - 200 && mouseX < width / 2 + 200 && mouseY > height - 50 && mouseY < height) {
+      push()
+      strokeWeight(10)
+      stroke('grey')
+      noFill()
+      rectMode(CENTER)
+      rect(width / 2 - 100 - 2, height - 25 - 3, 400, 50, 5)
+      pop()
+    }
+
     push()
     strokeWeight(5)
     rectMode(CENTER)
@@ -168,6 +183,14 @@ class MenuItem {
     textSize(20)
     textFont(regfont)
     text(this.artist, this.pos.x + 100, this.pos.y + 100)
+    pop()
+  }
+
+  highlight() {
+    push()
+    strokeWeight(10)
+    stroke('grey')
+    rect(this.pos.x - 3, this.pos.y - 5, this.length, 150, 75)
     pop()
   }
 

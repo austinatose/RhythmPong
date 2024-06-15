@@ -113,7 +113,7 @@ class Game {
       text("Missed", 100, 150)
     } else if (this.distance < 25) {
       fill('green')
-      text("Perfect", 100, 175) // TODO: generate particles when perfect (or all the time)
+      text("Perfect", 100, 150) // TODO: generate particles when perfect (or all the time)
     } else if (this.distance < 60) {
       fill('green')
       text("Good", 100, 150)
@@ -135,7 +135,10 @@ class Game {
       pop()
     }
 
+    // TODO: First ball doesn't return
+
     if (this.init) {
+      this.startframe = frameCount
       this.targetloc.y = height / 2 + 360
       this.targetloc.x = width / 2 + random(-150, 150) // table tennis rules
       if (this.missedlasttime) this.targetloc.x = width / 2 + random(0, 150)
@@ -145,12 +148,14 @@ class Game {
     }
     // return
     if (this.ball.pos.x < this.paddle.x + 30 && this.ball.pos.x > this.paddle.x - 30 && this.ball.pos.y < this.paddle.y + 30 && this.ball.pos.y > this.paddle.y - 30 && !this.hit && this.paddle.y > height/2) { // collided
-      hitsound1.play()
+      // hitsound1.play()
       this.distance = dist(this.ball.pos.x, this.ball.pos.y, this.targetloc.x, this.targetloc.y)
       console.log("hit", this.distance)
       this.targetloc.y = height / 2 - 310
       this.targetloc.x = width / 2 + random(-150, 150) // -150 to 150
-      this.ball.determineVelocity(this.targetloc, (this.interval * 60 * 2 - frameCount + this.startframe) / 60)
+      var remtime = (this.interval * 60 * 2 - frameCount + this.startframe) / 60
+      console.log(remtime)
+      this.ball.determineVelocity(this.targetloc, remtime)
       this.hit = true
       this.missedlasttime = false
       this.ballmovingtowardsplayer = true
@@ -197,7 +202,7 @@ class Game {
   // }
 
   checkhit() {
-    hitsound1.play()
+    // ound1.play()
     console.log("checkhit")
     if (this.hit) {
       this.ball = new Ball(this.targetloc.x, height / 2 - 310, this.interval)
@@ -218,7 +223,6 @@ class Game {
     this.hiteffect.y = this.ball.pos.y
     this.hiteffect.particles = []
 
-    this.startframe = frameCount
     this.init = true
     this.ballmovingtowardsplayer = false
   }
@@ -231,7 +235,12 @@ class Game {
     text("Game Over", width / 2, height / 2)
     textSize(50)
     text("Score: " + this.score, width / 2, height / 2 + 100)
+    text("Back to menu", width / 2, height / 2 + 200)
+    strokeWeight(3)
+    line(width / 2 - 170, height / 2 + 220, width / 2 + 170, height / 2 + 220)
     pop()
+
+    // TODO: back to menu
   }
 
   handleEnd() {
