@@ -241,6 +241,16 @@ class Game {
     pop()
 
     // TODO: back to menu
+    cursor(ARROW)
+    if (mouseX > width / 2 - 170 && mouseX < width / 2 + 170 && mouseY > height / 2 + 180 && mouseY < height / 2 + 220) {
+      cursor(HAND) // could change this
+      if (mouseIsPressed) {
+        this.song.stop()
+        this.song = null
+        onmenu = true
+        startgame = false
+      }
+    }
   }
 
   handleEnd() {

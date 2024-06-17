@@ -6,12 +6,15 @@ class Menu {
     this.init = true;
     this.lastselected = 0;
     this.newlastselected = 0;
-    this.delay = false;
+    this.delay = false; // delay instead of straight up blocking mouse holding action
     this.delaystartframe = 0;
     this.songpreview = null;
     this.isloadingsong = false;
     this.needstomove = true;
     this.canstart = true;
+    this.activemuteicon = unmuteicon;
+    this.mute = false;
+    this.mousewaspressed = false;
     console.log(this.setlist);
   }
 
@@ -67,7 +70,7 @@ class Menu {
       this.lastselected = this.newlastselected;
       this.songpreview.stop();
       this.demo = new Demo(width/2 + 400, height/2, 60/this.setlist[this.lastselected].bpm);
-      this.songpreview = loadSound(this.setlist[this.lastselected].song, () => {this.songpreview.playMode('restart'); this.songpreview.play(); this.isloadingsong = false; this.canstart = true}, () => {console.log("error loading song")});
+      this.songpreview = loadSound(this.setlist[this.lastselected].song, () => {this.songpreview.playMode('restart'); this.songpreview.play(); if (this.mute) this.songpreview.setVolume(0); this.isloadingsong = false; this.canstart = true}, () => {console.log("error loading song")});
       this.isloadingsong = true;
       this.needstomove = true;
     }
@@ -90,8 +93,17 @@ class Menu {
     push()
     strokeWeight(5)
     rect(0, height - 50, 50, 50, 5)
+    image(settingsicon, 5, height - 45, 40, 40)
     rect(50, height - 50, 50, 50, 5)
+    if (this.activemuteicon === unmuteicon) {
+      image(this.activemuteicon, 60, height - 40, 30, 30)
+    } else {
+      image(this.activemuteicon, 55, height - 45, 40, 40)
+    }
+    
     pop()
+
+    this.checkSettings();
 
     // info
     push()
@@ -150,6 +162,29 @@ class Menu {
       // titleentrysound.play()
       background(0)
 
+    }
+  }
+
+  checkSettings() {
+    if (mouseX > 0 && mouseX < 50 && mouseY > height - 50 && mouseY < height && mouseIsPressed && !this.mousewaspressed) {
+      console.log("settings")
+      // more here
+      this.mousewaspressed = true;
+    }
+    if (mouseX > 50 && mouseX < 100 && mouseY > height - 50 && mouseY < height && mouseIsPressed && !this.mousewaspressed) {
+      console.log("mute toggled")
+      this.mute = !this.mute;
+      if (this.mute) {
+        this.activemuteicon = muteicon;
+        this.songpreview.setVolume(0);
+      } else {
+        this.activemuteicon = unmuteicon;
+        this.songpreview.setVolume(1);
+      }
+      this.mousewaspressed = true;
+    }
+    if (this.mousewaspressed && !mouseIsPressed) {
+      this.mousewaspressed = false;
     }
   }
 }

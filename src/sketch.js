@@ -25,11 +25,14 @@ function preload() {
   startgamesound = loadSound('assets/effects/startgame.wav')
   regfont = loadFont('assets/fonts/Panton-Regular.ttf')
   boldfont = loadFont('assets/fonts/Panton-Bold.ttf')
+  settingsicon = loadImage('assets/images/settings-icon.png')
+  unmuteicon = loadImage('assets/images/speaker.png')
+  muteicon = loadImage('assets/images/speaker.slash.png')
   misscombo.setVolume(0.5)
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  let cnv = createCanvas(windowWidth, windowHeight);
   camera.zoom = 1.6
   title = new TitleScreen()
   setlist.push(new SetlistItem("assets/songs/xi - Freedom Dive.mp3", 111.11, "Freedom Dive (Easy)", "xi", "Easy"))
