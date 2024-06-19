@@ -141,7 +141,7 @@ class Game {
       this.startframe = frameCount
       this.targetloc.y = height / 2 + 360
       this.targetloc.x = width / 2 + random(-150, 150) // table tennis rules
-      if (this.missedlasttime) this.targetloc.x = width / 2 + random(0, 150)
+      if (this.missedlasttime) this.targetloc.x = width / 2 + 50 // random(0, 150)
       this.ball.determineVelocity(this.targetloc, this.interval)
       this.init = false
       console.log("init")
