@@ -3,6 +3,7 @@ let startgame = false;
 let startbpmmode = false;
 let ontitle = true;
 let onmenu = false;
+let insettings = false;
 
 let selecteditem = null;
 
@@ -35,6 +36,7 @@ function setup() {
   let cnv = createCanvas(windowWidth, windowHeight);
   camera.zoom = 1.6
   title = new TitleScreen()
+  settings = new Settings()
   setlist.push(new SetlistItem("assets/songs/xi - Freedom Dive.mp3", 111.11, "Freedom Dive (Easy)", "xi", "Easy"))
   setlist.push(new SetlistItem("assets/songs/Deep Purple - Smoke on the Water.mp3", 115, "Smoke on the Water", "Deep Purple", "Easy"))
   setlist.push(new SetlistItem("assets/songs/YOASOBI - Racing Into The Night.mp3", 130, "Racing Into The Night", "YOASOBI", "Normal"))
@@ -47,7 +49,7 @@ function setup() {
   setlist.push(new SetlistItem("assets/songs/xi - Freedom Dive.mp3", 222.22, "Freedom Dive (Expert)", "xi", "Expert"))  
   menu = new Menu(setlist)
 
-  // find out valid screen size in the future
+  // TODO: find out valid screen size
   if (width < 2528 || height < 1539) {
     // alert user
   }
@@ -66,6 +68,7 @@ function draw() {
   if (ontitle) title.render()
   if (onmenu) menu.render()
   if (transitioning) transition()
+  if (insettings) settings.render()
   if (startgame) {
     // console.log(obtainBPM(song))
     game.run()

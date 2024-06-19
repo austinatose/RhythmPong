@@ -22,14 +22,14 @@ class Menu {
     if (this.init) {
       this.demo = new Demo(width/2 + 400, height/2, 0.5);
       for (let i = 0; i < this.setlist.length; i++) {
-        // TODO: Make sizes adaptive
+        // TODO: Make sizes adaptive for different screen sizes
         this.menuitems.push(new MenuItem(createVector(-75, height/2 - 400 + i * 150), this.setlist[i].song, this.setlist[i].bpm, this.setlist[i].name, this.setlist[i].artist, this.setlist[i].difficulty));
       }
+      this.menuitems.push(new CustomSongInterfaceMenuItem(createVector(-75, height/2 - 400 + this.setlist.length * 150)));
       this.songpreview = loadSound(this.setlist[this.lastselected].song, () => {this.songpreview.play();}, () => {console.log("error loading song")});
       this.init = false;
     }
     for (let i = this.lastselected - 2; i <= this.lastselected + 2; i++) {
-      // TODO: Animate menus
       if (this.lastselected === 1) {
         if (i === -1) continue;
       } else if (this.lastselected === 0) {
@@ -69,9 +69,13 @@ class Menu {
     if (this.lastselected !== this.newlastselected) {
       this.lastselected = this.newlastselected;
       this.songpreview.stop();
-      this.demo = new Demo(width/2 + 400, height/2, 60/this.setlist[this.lastselected].bpm);
-      this.songpreview = loadSound(this.setlist[this.lastselected].song, () => {this.songpreview.playMode('restart'); this.songpreview.play(); if (this.mute) this.songpreview.setVolume(0); this.isloadingsong = false; this.canstart = true}, () => {console.log("error loading song")});
-      this.isloadingsong = true;
+      console.log(this.menuitems[this.lastselected])
+      console.log(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)
+      if (!(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)) {
+        this.demo = new Demo(width/2 + 400, height/2, 60/this.setlist[this.lastselected].bpm);
+        this.songpreview = loadSound(this.setlist[this.lastselected].song, () => {this.songpreview.playMode('restart'); this.songpreview.play(); if (this.mute) this.songpreview.setVolume(0); this.isloadingsong = false; this.canstart = true}, () => {console.log("error loading song")});
+        this.isloadingsong = true;
+      }
       this.needstomove = true;
     }
 
@@ -106,13 +110,15 @@ class Menu {
     this.checkSettings();
 
     // info
-    push()
-    textSize(20)
-    textAlign(LEFT)
-    textFont(regfont)
-    text("BPM: " + this.setlist[this.lastselected].bpm, 10, 20)
-    text("Difficulty: " + this.setlist[this.lastselected].difficulty, 10, 40)
-    pop()
+    if (!(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)) {
+      push()
+      textSize(20)
+      textAlign(LEFT)
+      textFont(regfont)
+      text("BPM: " + this.setlist[this.lastselected].bpm, 10, 20)
+      text("Difficulty: " + this.setlist[this.lastselected].difficulty, 10, 40)
+      pop()
+    }
 
     // play button along bottom of screen
     // highlight
@@ -135,7 +141,8 @@ class Menu {
     textSize(25)
     textAlign(CENTER)
     textFont(boldfont)
-    text("Play with this Song!", width / 2 - 100, height - 20)
+    if (!(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)) text("Play with this Song!", width / 2 - 100, height - 20)
+    else text("Upload my own Song!", width / 2 - 100, height - 20)
     pop()
 
     this.checkforplay();
@@ -143,33 +150,50 @@ class Menu {
     // err
     this.demo.opponent2.rotoffset = -PI/2
     this.demo.opponent2.invert = false
-    this.demo.render();
+    if (!(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)) this.demo.render();
+    else {
+      push()
+      textSize(50)
+      textAlign(CENTER)
+      textFont(regfont)
+      text("Upload your own song!", width/2 + 300, height/2)
+      pop()
+    }
   }
 
   checkforplay() {
     if (mouseX > width / 2 - 200 && mouseX < width / 2 + 200 && mouseY > height - 50 && mouseY < height && mouseIsPressed && this.canstart) {
-      this.songpreview.stop();
-      this.canstart = false;
-      // console.log("play")
-      startgamesound.play();
-      // startgame = true;
-      // onmenu = false;
-      // transitioning = true;
-      // transitionstartframe = frameCount;
-      selecteditem = setlist[this.lastselected];
-      song = loadSound(selecteditem.song, onSoundLoadSuccess_game, onSoundLoadError)
-      console.log("start game with song: " + selecteditem.song)
-      // titleentrysound.play()
-      background(0)
-
+      if (!(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)) {
+        this.songpreview.stop();
+        this.canstart = false;
+        // console.log("play")
+        startgamesound.play();
+        // startgame = true;
+        // onmenu = false;
+        // transitioning = true;
+        // transitionstartframe = frameCount;
+        selecteditem = setlist[this.lastselected];
+        if (!(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)) song = loadSound(selecteditem.song, onSoundLoadSuccess_game, onSoundLoadError)
+        console.log("start game with song: " + selecteditem.song)
+        // titleentrysound.play()
+        background(0)
+      } else {
+        console.log("upload song")
+        onmenu = false;
+        startbpmmode = true;
+        insettings = false;
+        // TODO: Complete this
+      }
     }
   }
 
   checkSettings() {
     if (mouseX > 0 && mouseX < 50 && mouseY > height - 50 && mouseY < height && mouseIsPressed && !this.mousewaspressed) {
       console.log("settings")
-      // more here
+      // TODO: settings implementation here
       this.mousewaspressed = true;
+      insettings = !insettings;
+      // onmenu is still true! settings window is just on top
     }
     if (mouseX > 50 && mouseX < 100 && mouseY > height - 50 && mouseY < height && mouseIsPressed && !this.mousewaspressed) {
       console.log("mute toggled")
@@ -218,6 +242,50 @@ class MenuItem {
     textSize(20)
     textFont(regfont)
     text(this.artist, this.pos.x + 100, this.pos.y + 100)
+    pop()
+  }
+
+  highlight() {
+    push()
+    strokeWeight(10)
+    stroke('grey')
+    rect(this.pos.x - 3, this.pos.y - 5, this.length, 150, 75)
+    pop()
+  }
+
+  move() {
+    // this.pos = lerp(this.pos, this.targetpos, 0.1)
+    // this.pos.add(this.targetpos.sub(this.pos).mult(0.1))
+    this.pos.x += (this.targetpos.x - this.pos.x) * 0.1
+    this.pos.y += (this.targetpos.y - this.pos.y) * 0.1
+    // console.log(this.pos.x, this.targetpos.x, this.pos.x - this.targetpos.x)
+  }
+}
+
+class CustomSongInterfaceMenuItem {
+  constructor(pos) {
+    this.pos = pos
+    this.length = 800
+    this.offset = 0
+    this.targetpos = pos
+  }
+
+  render() {
+    push()
+    strokeWeight(5)
+    fill(180)
+    rect(this.pos.x, this.pos.y, this.length, 150, 75)
+    pop()
+
+    push()
+    translate(-this.targetpos.x-75, 0)
+    textSize(30)
+    textFont(boldfont)
+    textAlign(LEFT)
+    text("Custom Song", this.pos.x + 100, this.pos.y + 50)
+    textSize(20)
+    textFont(regfont)
+    text("You!", this.pos.x + 100, this.pos.y + 100)
     pop()
   }
 

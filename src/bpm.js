@@ -1,3 +1,5 @@
+// TODO: Completely Rework this
+
 class BPMobtainer {
   constructor(song) {
     this.bpm = 0

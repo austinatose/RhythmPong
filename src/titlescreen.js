@@ -8,7 +8,7 @@ class TitleScreen {
   }
 
   render() {
-    // title is way too big, maybe adapt for screen sizes
+    // TODO: title is way too big, maybe adapt for screen sizes
     background(220)
     translate(0, -50)
     scale(this.diff)
@@ -57,7 +57,15 @@ class TitleScreen {
     textFont(boldfont)
     textSize(50)
     textAlign(CENTER)
-    text("> Press any key to start <", width / 2, height / 2 + 465)
+    text("> Press any key to start <", width / 2, height / 2 + 455)
+    pop()
+
+    // the copyright text (fake)
+    push()
+    textFont(regfont)
+    textSize(15)
+    textAlign(CENTER)
+    text("© 2024 Austin Liu", width / 2, height + 45) // wait why does it have to have this
     pop()
 
     // push()
