@@ -17,7 +17,7 @@ class Ball {
   }
 
   determineVelocity(target, interval) {
-    // target: width / 2 + 50, height / 2 + 50
+    // target: windowWidth / 2 + 50, height / 2 + 50
     this.vel.x = (target.x - this.pos.x) / (interval * 60)
     this.vel.y = (target.y - this.pos.y) / (interval * 60)
 

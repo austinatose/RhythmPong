@@ -9,7 +9,7 @@ class Paddle {
     this.y = mouseY
     push()
     translate(this.x, this.y)
-    let rotationAngle = -(width/2 - mouseX - 80) / 400
+    let rotationAngle = -(windowWidth/2 - mouseX - 80) / 400
     constrain(rotationAngle, -0.5625, 0.5625)
     rotate(rotationAngle)
     strokeWeight(8)

@@ -1,8 +1,8 @@
 class Opponent {
   constructor() {
-    this.middle = width/2
+    this.middle = windowWidth/2
     this.x = 0
-    this.y = height/2 - 350
+    this.y = windowHeight/2 - 350
     this.targetloc = createVector()
     this.color = 'blue'
     this.invert = false

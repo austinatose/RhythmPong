@@ -78,9 +78,9 @@ class BPMobtainer {
 
   //   this.ellipseWidth *= 0.95
 
-  //   ellipse(width / 2, height / 2, this.ellipseWidth, this.ellipseWidth)
+  //   ellipse(windowWidth / 2, height / 2, this.ellipseWidth, this.ellipseWidth)
   //   push()
-  //   translate(width / 2, height / 2)
+  //   translate(windowWidth / 2, height / 2)
   //   beginShape()
   //   for (let i = 0; i < spectrum.length; i++) {
   //     let angle = map(i, 0, spectrum.length, 0, TWO_PI)
@@ -125,7 +125,7 @@ class BPMobtainer {
 
     push()
     angleMode(DEGREES)
-    translate(width / 2, height / 2)
+    translate(windowWidth / 2, height / 2)
     beginShape()
     noFill()
     for (let i = 0; i <= 180; i++) {

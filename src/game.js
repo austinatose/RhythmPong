@@ -4,8 +4,8 @@ class Game {
     // this.interval = 60/195 // 195 bpm (mythologia's end by hatsune miku)
     // this.interval = 60/200 // TTFAF
     this.interval = interval
-    this.ball = new Ball(width / 2 - 120, height / 2 - 310)
-    this.table = new Table(createVector(width / 2, height / 2))
+    this.ball = new Ball(windowWidth / 2 - 120, windowHeight / 2 - 310)
+    this.table = new Table(createVector(windowWidth / 2, windowHeight / 2))
     this.paddle = new Paddle()
     this.fireeffect = new Fire(100, 150)
     this.hiteffect = new HitEffect(100, 150)
@@ -90,7 +90,7 @@ class Game {
     textFont(boldfont)
     textSize(250)
     textAlign(CENTER)
-    text(this.countdownbeat, width / 2, height / 2)
+    text(this.countdownbeat, windowWidth / 2, windowHeight / 2)
     pop()
   }
 
@@ -139,20 +139,20 @@ class Game {
 
     if (this.init) {
       this.startframe = frameCount
-      this.targetloc.y = height / 2 + 360
-      this.targetloc.x = width / 2 + random(-150, 150) // table tennis rules
-      if (this.missedlasttime) this.targetloc.x = width / 2 + 50 // random(0, 150)
+      this.targetloc.y = windowHeight / 2 + 360
+      this.targetloc.x = windowWidth / 2 + random(-150, 150) // table tennis rules
+      if (this.missedlasttime) this.targetloc.x = windowWidth / 2 + 50 // random(0, 150)
       this.ball.determineVelocity(this.targetloc, this.interval)
       this.init = false
       console.log("init")
     }
     // return
-    if (this.ball.pos.x < this.paddle.x + 30 && this.ball.pos.x > this.paddle.x - 30 && this.ball.pos.y < this.paddle.y + 30 && this.ball.pos.y > this.paddle.y - 30 && !this.hit && this.paddle.y > height/2) { // collided
+    if (this.ball.pos.x < this.paddle.x + 30 && this.ball.pos.x > this.paddle.x - 30 && this.ball.pos.y < this.paddle.y + 30 && this.ball.pos.y > this.paddle.y - 30 && !this.hit && this.paddle.y > windowHeight/2) { // collided
       // hitsound1.play()
       this.distance = dist(this.ball.pos.x, this.ball.pos.y, this.targetloc.x, this.targetloc.y)
       console.log("hit", this.distance)
-      this.targetloc.y = height / 2 - 310
-      this.targetloc.x = width / 2 + random(-150, 150) // -150 to 150
+      this.targetloc.y = windowHeight / 2 - 310
+      this.targetloc.x = windowWidth / 2 + random(-150, 150) // -150 to 150
       var remtime = (this.interval * 60 * 2 - frameCount + this.startframe) / 60
       console.log(remtime)
       this.ball.determineVelocity(this.targetloc, remtime)
@@ -205,13 +205,13 @@ class Game {
     // ound1.play()
     console.log("checkhit")
     if (this.hit) {
-      this.ball = new Ball(this.targetloc.x, height / 2 - 310, this.interval)
+      this.ball = new Ball(this.targetloc.x, windowHeight / 2 - 310, this.interval)
       this.hit = false
     } else { // if exceeded beat (missed ball)
-      this.ball = new Ball(width / 2 - 120, height / 2 - 310, this.interval) 
+      this.ball = new Ball(windowWidth / 2 - 120, windowHeight / 2 - 310, this.interval) 
       // console.log("missed")
       // console.log(this.opponent)
-      this.opponent.x = width / 2 - 120
+      this.opponent.x = windowWidth / 2 - 120
       this.missedlasttime = true
       this.combo = 0
       misscombo.play()
@@ -232,17 +232,17 @@ class Game {
     push()
     textSize(100)
     textAlign(CENTER)
-    text("Game Over", width / 2, height / 2)
+    text("Game Over", windowWidth / 2, windowHeight / 2)
     textSize(50)
-    text("Score: " + this.score, width / 2, height / 2 + 100)
-    text("Back to menu", width / 2, height / 2 + 200)
+    text("Score: " + this.score, windowWidth / 2, windowHeight / 2 + 100)
+    text("Back to menu", windowWidth / 2, windowHeight / 2 + 200)
     strokeWeight(3)
-    line(width / 2 - 170, height / 2 + 220, width / 2 + 170, height / 2 + 220)
+    line(windowWidth / 2 - 170, windowHeight / 2 + 220, windowWidth / 2 + 170, windowHeight / 2 + 220)
     pop()
 
     // TODO: back to menu
     cursor(ARROW)
-    if (mouseX > width / 2 - 170 && mouseX < width / 2 + 170 && mouseY > height / 2 + 180 && mouseY < height / 2 + 220) {
+    if (mouseX > windowWidth / 2 - 170 && mouseX < windowWidth / 2 + 170 && mouseY > windowHeight / 2 + 180 && mouseY < windowHeight / 2 + 220) {
       cursor(HAND) // could change this
       if (mouseIsPressed) {
         this.song.stop()

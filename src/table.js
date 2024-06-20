@@ -1,7 +1,7 @@
 class Table {
   constructor(origin) {
-    this.width = 200
-    this.height = 600
+    this.windowWidth = 200
+    this.windowHeight = 600
     this.origin = origin
   }
 

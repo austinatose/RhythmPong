@@ -50,21 +50,22 @@ function setup() {
   menu = new Menu(setlist)
 
   // TODO: find out valid screen size
-  if (width < 2528 || height < 1539) {
+  if (windowWidth < 2528 || windowHeight < 1539) {
     // alert user
   }
 }
 
 function draw() {
+  resizeCanvas(windowWidth, windowHeight)
   frameRate(60)
   background(220)
-  // translate(width / 2 - width / 1.3 / 2, height / 2 - height / 1.3 / 2)
+  // translate(windowWidth / 2 - windowWidth / 1.3 / 2, windowHeight / 2 - windowHeight / 1.3 / 2)
   // resizeCanvas(windowWidth / 1.6, windowHeight / 1.6)
-  // translate(width / 2, height / 2)
+  // translate(windowWidth / 2, windowHeight / 2)
   // scale(1.6)
-  // translate(-width / 2, -height / 2)
+  // translate(-windowWidth / 2, -windowHeight / 2)
 
-  // console.log(width, height)
+  // console.log(windowWidth, windowHeight)
   if (ontitle) title.render()
   if (onmenu) menu.render()
   if (transitioning) transition()
@@ -90,7 +91,7 @@ function transition() {
   if (frameCount - transitionstartframe > 60) {
     fill(0, 0, 0, 255 - 255 * (frameCount - transitionstartframe - 60) / 30)
   }
-  rect(0, 0, width, height)
+  rect(0, 0, windowWidth, windowHeight)
   pop()
   if (frameCount - transitionstartframe > 90) {
     transitioning = false;

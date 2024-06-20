@@ -20,15 +20,17 @@ class Menu {
 
   render() {
     if (this.init) {
-      this.demo = new Demo(width/2 + 400, height/2, 0.5);
+      this.demo = new Demo(windowWidth - 200, windowHeight/2, 0.5);
       for (let i = 0; i < this.setlist.length; i++) {
         // TODO: Make sizes adaptive for different screen sizes
-        this.menuitems.push(new MenuItem(createVector(-75, height/2 - 400 + i * 150), this.setlist[i].song, this.setlist[i].bpm, this.setlist[i].name, this.setlist[i].artist, this.setlist[i].difficulty));
+        this.menuitems.push(new MenuItem(createVector(-75, windowHeight/2 - 400 + i * 150), this.setlist[i].song, this.setlist[i].bpm, this.setlist[i].name, this.setlist[i].artist, this.setlist[i].difficulty));
       }
-      this.menuitems.push(new CustomSongInterfaceMenuItem(createVector(-75, height/2 - 400 + this.setlist.length * 150)));
+      this.menuitems.push(new CustomSongInterfaceMenuItem(createVector(-75, windowHeight/2 - 400 + this.setlist.length * 150)));
       this.songpreview = loadSound(this.setlist[this.lastselected].song, () => {this.songpreview.play();}, () => {console.log("error loading song")});
       this.init = false;
     }
+    this.demo.x = windowWidth - 200
+    this.demo.y = windowHeight/2
     for (let i = this.lastselected - 2; i <= this.lastselected + 2; i++) {
       if (this.lastselected === 1) {
         if (i === -1) continue;
@@ -39,8 +41,8 @@ class Menu {
       } else if (this.lastselected === this.menuitems.length - 1) {
         if (i === this.menuitems.length || i === this.menuitems.length + 1) continue;
       }
-      // this.menuitems[i].pos.x = lerp(this.menuitems[i].pos.x, height/2 - 75 - (this.lastselected - i) * 150, 0.1);
-      // this.menuitems[i].pos.y = height/2 - 75 - (this.lastselected - i) * 150;
+      // this.menuitems[i].pos.x = lerp(this.menuitems[i].pos.x, windowHeight/2 - 75 - (this.lastselected - i) * 150, 0.1);
+      // this.menuitems[i].pos.y = windowHeight/2 - 75 - (this.lastselected - i) * 150;
       if (mouseX > this.menuitems[i].pos.x && mouseX < this.menuitems[i].pos.x + 800 && mouseY > this.menuitems[i].pos.y && mouseY < this.menuitems[i].pos.y + 150) {
         // highlight
         this.menuitems[i].highlight();
@@ -59,7 +61,7 @@ class Menu {
       }
       // animation
       // this.menuitems[i].pos.x -= 400 - 200 * abs(this.lastselected - i);
-      if (this.needstomove) this.menuitems[i].targetpos = createVector(-75 - 75 * abs(this.lastselected - i), height/2 - 75 - (this.lastselected - i) * 150); 
+      if (this.needstomove) this.menuitems[i].targetpos = createVector(-75 - 75 * abs(this.lastselected - i), windowHeight/2 - 75 - (this.lastselected - i) * 150); 
       this.menuitems[i].move();
       this.menuitems[i].render();
     }
@@ -72,7 +74,7 @@ class Menu {
       console.log(this.menuitems[this.lastselected])
       console.log(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)
       if (!(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)) {
-        this.demo = new Demo(width/2 + 400, height/2, 60/this.setlist[this.lastselected].bpm);
+        this.demo = new Demo(windowWidth/2 + 400, windowHeight/2, 60/this.setlist[this.lastselected].bpm);
         this.songpreview = loadSound(this.setlist[this.lastselected].song, () => {this.songpreview.playMode('restart'); this.songpreview.play(); if (this.mute) this.songpreview.setVolume(0); this.isloadingsong = false; this.canstart = true}, () => {console.log("error loading song")});
         this.isloadingsong = true;
       }
@@ -88,7 +90,7 @@ class Menu {
       textSize(50)
       textAlign(CENTER)
       textFont(regfont)
-      text("Loading song...", width/2, height/2)
+      text("Loading song...", windowWidth/2, windowHeight/2)
       this.canstart = false;
       pop()
     }
@@ -96,13 +98,13 @@ class Menu {
     // square on bottom left for settings and mute
     push()
     strokeWeight(5)
-    rect(0, height - 50, 50, 50, 5)
-    image(settingsicon, 5, height - 45, 40, 40)
-    rect(50, height - 50, 50, 50, 5)
+    rect(0, windowHeight - 50, 50, 50, 5)
+    image(settingsicon, 5, windowHeight - 45, 40, 40)
+    rect(50, windowHeight - 50, 50, 50, 5)
     if (this.activemuteicon === unmuteicon) {
-      image(this.activemuteicon, 60, height - 40, 30, 30)
+      image(this.activemuteicon, 60, windowHeight - 40, 30, 30)
     } else {
-      image(this.activemuteicon, 55, height - 45, 40, 40)
+      image(this.activemuteicon, 55, windowHeight - 45, 40, 40)
     }
     
     pop()
@@ -122,27 +124,27 @@ class Menu {
 
     // play button along bottom of screen
     // highlight
-    if (mouseX > width / 2 - 200 && mouseX < width / 2 + 200 && mouseY > height - 50 && mouseY < height) {
+    if (mouseX > windowWidth / 2 - 200 && mouseX < windowWidth / 2 + 200 && mouseY > windowHeight - 50 && mouseY < windowHeight) {
       push()
       strokeWeight(10)
       stroke('grey')
       noFill()
       rectMode(CENTER)
-      rect(width / 2 - 100 - 2, height - 25 - 3, 400, 50, 5)
+      rect(windowWidth / 2 - 100 - 2, windowHeight - 25 - 3, 400, 50, 5)
       pop()
     }
 
     push()
     strokeWeight(5)
     rectMode(CENTER)
-    rect(width / 2 - 100, height - 25, 400, 50, 5)
+    rect(windowWidth / 2 - 100, windowHeight - 25, 400, 50, 5)
     pop()
     push()
     textSize(25)
     textAlign(CENTER)
     textFont(boldfont)
-    if (!(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)) text("Play with this Song!", width / 2 - 100, height - 20)
-    else text("Upload my own Song!", width / 2 - 100, height - 20)
+    if (!(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)) text("Play with this Song!", windowWidth / 2 - 100, windowHeight - 20)
+    else text("Upload my own Song!", windowWidth / 2 - 100, windowHeight - 20)
     pop()
 
     this.checkforplay();
@@ -156,13 +158,13 @@ class Menu {
       textSize(50)
       textAlign(CENTER)
       textFont(regfont)
-      text("Upload your own song!", width/2 + 300, height/2)
+      text("Upload your own song!", windowWidth/2 + 300, windowHeight/2)
       pop()
     }
   }
 
   checkforplay() {
-    if (mouseX > width / 2 - 200 && mouseX < width / 2 + 200 && mouseY > height - 50 && mouseY < height && mouseIsPressed && this.canstart) {
+    if (mouseX > windowWidth / 2 - 200 && mouseX < windowWidth / 2 + 200 && mouseY > windowHeight - 50 && mouseY < windowHeight && mouseIsPressed && this.canstart) {
       if (!(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)) {
         this.songpreview.stop();
         this.canstart = false;
@@ -188,14 +190,14 @@ class Menu {
   }
 
   checkSettings() {
-    if (mouseX > 0 && mouseX < 50 && mouseY > height - 50 && mouseY < height && mouseIsPressed && !this.mousewaspressed) {
+    if (mouseX > 0 && mouseX < 50 && mouseY > windowHeight - 50 && mouseY < windowHeight && mouseIsPressed && !this.mousewaspressed) {
       console.log("settings")
       // TODO: settings implementation here
       this.mousewaspressed = true;
       insettings = !insettings;
       // onmenu is still true! settings window is just on top
     }
-    if (mouseX > 50 && mouseX < 100 && mouseY > height - 50 && mouseY < height && mouseIsPressed && !this.mousewaspressed) {
+    if (mouseX > 50 && mouseX < 100 && mouseY > windowHeight - 50 && mouseY < windowHeight && mouseIsPressed && !this.mousewaspressed) {
       console.log("mute toggled")
       this.mute = !this.mute;
       if (this.mute) {
