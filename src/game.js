@@ -5,7 +5,7 @@ class Game {
     // this.interval = 60/200 // TTFAF
     this.interval = interval
     this.ball = new Ball(windowWidth / 2 - 120, windowHeight / 2 - 310)
-    this.table = new Table(createVector(windowWidth / 2, windowHeight / 2))
+    this.table = new Table(createVector(windowWidth / 2, windowHeight / 2)) // unfortunately resize doesn't really work here because the position is too sensitive
     this.paddle = new Paddle()
     this.fireeffect = new Fire(100, 150)
     this.hiteffect = new HitEffect(100, 150)

@@ -50,15 +50,16 @@ function setup() {
   menu = new Menu(setlist)
 
   // TODO: find out valid screen size
-  if (windowWidth < 2528 || windowHeight < 1539) {
-    // alert user
-  }
 }
 
 function draw() {
   resizeCanvas(windowWidth, windowHeight)
   frameRate(60)
   background(220)
+  let debug = true
+  if (windowWidth < 1267 || windowHeight < 903 && debug == false) {
+    alert("Your screen size is too small! Please try resizing your window or zooming out.")
+  }
   // translate(windowWidth / 2 - windowWidth / 1.3 / 2, windowHeight / 2 - windowHeight / 1.3 / 2)
   // resizeCanvas(windowWidth / 1.6, windowHeight / 1.6)
   // translate(windowWidth / 2, windowHeight / 2)
@@ -78,8 +79,11 @@ function draw() {
     bpm.obtainBPM()
   }
 
+  // debug
   // console.log(frameRate())
   // console.log(mouseX, mouseY)
+  text("FPS: " + frameRate().toFixed(2), 10, 10)
+  text("Canvas size: " + windowWidth + "x" + windowHeight, 10, 30)
 }
 
 function transition() {

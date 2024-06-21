@@ -2,6 +2,8 @@ class TitleScreen {
   constructor() {
     // this.table = new Table(createVector((windowHeight / 2 + 450) / 1.3, -windowWidth / 2 / 1.3)) // very cursed coordinates to fix rotation
     this.demo = new Demo(windowWidth / 2, windowHeight / 2, 0.5)
+    this.demoOffset = createVector(0, 0)
+    this.startwindowsize = createVector(windowWidth, windowHeight)
     this.startframe = frameCount
     this.firstplay = true
     this.diff = 1
@@ -10,11 +12,11 @@ class TitleScreen {
   render() {
     // TODO: title is way too big, maybe adapt for screen sizes
     background(220)
-    translate(0, -50)
+    translate(0, -70)
     scale(this.diff)
 
-    this.demo.x = windowWidth / 2
-    this.demo.y = windowHeight / 2
+    // this.demo.x = windowWidth / 2
+    // this.demo.y = windowHeight / 2
 
     // push()
     // translate(windowWidth * 0.0138449367, -windowHeight * 0.0584795322) // small position tweaks
@@ -50,9 +52,12 @@ class TitleScreen {
     push()
     // what is going on with these coordinates (it ain't broken, don't fix it)
     translate(windowWidth / 2, windowHeight / 2) // move origin top
-    translate(0, 150)
     rotate(PI/2)
     translate(-windowWidth / 2, -windowHeight / 2)
+    translate(150, 0)
+    this.windowResizePatch()
+    translate(this.demoOffset.x, this.demoOffset.y)
+    // console.log(this.demoOffset)
     this.demo.render()
     pop()
 
@@ -68,7 +73,7 @@ class TitleScreen {
     textFont(regfont)
     textSize(15)
     textAlign(CENTER)
-    text("© 2024 Austin Liu", windowWidth / 2, windowHeight + 45) // wait why does it have to have this
+    text("© 2024 Austin Liu", windowWidth / 2, windowHeight + 60) // wait why does it have to have this
     pop()
 
     // push()
@@ -88,6 +93,16 @@ class TitleScreen {
     } else {
       this.diff -= 0.0002
     }
-    console.log(windowWidth, windowHeight)
+  }
+
+  windowResizePatch() {
+    if (this.startwindowsize.x != windowWidth || this.startwindowsize.y != windowHeight) {
+      this.demoOffset = createVector((windowWidth - this.startwindowsize.x)/2, (windowHeight - this.startwindowsize.y)/2)
+
+      // small to big = positive
+      // console.log(this.startwindowsize, windowWidth, windowHeight)
+      // this.startwindowsize = createVector(windowWidth, windowHeight)
+      // console.log("patched")
+    }
   }
 }

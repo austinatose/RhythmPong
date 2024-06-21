@@ -20,7 +20,7 @@ class Menu {
 
   render() {
     if (this.init) {
-      this.demo = new Demo(windowWidth - 200, windowHeight/2, 0.5);
+      this.demo = new Demo(windowWidth * 3/4 + 50, windowHeight/2, 0.5);
       for (let i = 0; i < this.setlist.length; i++) {
         // TODO: Make sizes adaptive for different screen sizes
         this.menuitems.push(new MenuItem(createVector(-75, windowHeight/2 - 400 + i * 150), this.setlist[i].song, this.setlist[i].bpm, this.setlist[i].name, this.setlist[i].artist, this.setlist[i].difficulty));
@@ -29,7 +29,7 @@ class Menu {
       this.songpreview = loadSound(this.setlist[this.lastselected].song, () => {this.songpreview.play();}, () => {console.log("error loading song")});
       this.init = false;
     }
-    this.demo.x = windowWidth - 200
+    this.demo.x = windowWidth * 3/4 + 50
     this.demo.y = windowHeight/2
     for (let i = this.lastselected - 2; i <= this.lastselected + 2; i++) {
       if (this.lastselected === 1) {
@@ -74,7 +74,7 @@ class Menu {
       console.log(this.menuitems[this.lastselected])
       console.log(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)
       if (!(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)) {
-        this.demo = new Demo(windowWidth/2 + 400, windowHeight/2, 60/this.setlist[this.lastselected].bpm);
+        this.demo = new Demo(windowWidth * 3/4 + 50, windowHeight/2, 60/this.setlist[this.lastselected].bpm);
         this.songpreview = loadSound(this.setlist[this.lastselected].song, () => {this.songpreview.playMode('restart'); this.songpreview.play(); if (this.mute) this.songpreview.setVolume(0); this.isloadingsong = false; this.canstart = true}, () => {console.log("error loading song")});
         this.isloadingsong = true;
       }
@@ -158,7 +158,7 @@ class Menu {
       textSize(50)
       textAlign(CENTER)
       textFont(regfont)
-      text("Upload your own song!", windowWidth/2 + 300, windowHeight/2)
+      text("Upload your own song!", windowWidth * 3/4 + 50, windowHeight/2)
       pop()
     }
   }
