@@ -12,6 +12,11 @@ let transitionstartframe = 0
 
 let setlist = []
 
+// settings
+let particles = true
+let soundeffects = true
+let wasonsettings = false
+
 function onSoundLoadError(e){
   console.log("load sound error",e);
 }
@@ -84,6 +89,11 @@ function draw() {
   // console.log(mouseX, mouseY)
   text("FPS: " + frameRate().toFixed(2), 10, 10)
   text("Canvas size: " + windowWidth + "x" + windowHeight, 10, 30)
+
+  if (wasonsettings && !insettings) {
+    settings.hide()
+    wasonsettings = false
+  }
 }
 
 function transition() {

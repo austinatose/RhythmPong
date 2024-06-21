@@ -7,15 +7,17 @@ class Fire {
   }
 
   render() {
-    for (let i = 0; i < this.dramaticness; i++) {
-      this.particles.push(new FireParticle(this.x, this.y));
-    }
-
-    for (let i = this.particles.length - 1; i >= 0; i--) {
-      this.particles[i].update();
-      this.particles[i].show();
-      if (this.particles[i].finished()) {
-        this.particles.splice(i, 1);
+    if (settings.particles) {
+      for (let i = 0; i < this.dramaticness; i++) {
+        this.particles.push(new FireParticle(this.x, this.y));
+      }
+  
+      for (let i = this.particles.length - 1; i >= 0; i--) {
+        this.particles[i].update();
+        this.particles[i].show();
+        if (this.particles[i].finished()) {
+          this.particles.splice(i, 1);
+        }
       }
     }
   }

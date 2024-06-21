@@ -195,6 +195,7 @@ class Menu {
       // TODO: settings implementation here
       this.mousewaspressed = true;
       insettings = !insettings;
+      wasonsettings = true;
       // onmenu is still true! settings window is just on top
     }
     if (mouseX > 50 && mouseX < 100 && mouseY > windowHeight - 50 && mouseY < windowHeight && mouseIsPressed && !this.mousewaspressed) {
