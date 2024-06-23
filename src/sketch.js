@@ -1,6 +1,6 @@
 let song;
 let startgame = false;
-let startbpmmode = false;
+let startcustomsongmenu = false;
 let ontitle = true;
 let onmenu = false;
 let insettings = false;
@@ -11,6 +11,7 @@ let transitioning = false
 let transitionstartframe = 0
 
 let setlist = []
+let customsongs = []
 
 // settings
 let useparticles = true
@@ -42,6 +43,7 @@ function setup() {
   camera.zoom = 1.6
   title = new TitleScreen()
   settings = new Settings()
+  customsongmenu = new CustomSongMenu()
   setlist.push(new SetlistItem("assets/songs/xi - Freedom Dive.mp3", 111.11, "Freedom Dive (Easy)", "xi", "Easy"))
   setlist.push(new SetlistItem("assets/songs/Deep Purple - Smoke on the Water.mp3", 115, "Smoke on the Water", "Deep Purple", "Easy"))
   setlist.push(new SetlistItem("assets/songs/YOASOBI - Racing Into The Night.mp3", 130, "Racing Into The Night", "YOASOBI", "Normal"))
@@ -78,8 +80,8 @@ function draw() {
     // console.log(obtainBPM(song))
     game.run()
   }
-  if (startbpmmode) {
-    bpm.obtainBPM()
+  if (startcustomsongmenu) {
+    customsongmenu.render()
   }
 
   // debug

@@ -75,8 +75,15 @@ class Menu {
       console.log(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)
       if (!(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)) {
         this.demo = new Demo(windowWidth * 3/4 + 50, windowHeight/2, 60/this.setlist[this.lastselected].bpm);
-        this.songpreview = loadSound(this.setlist[this.lastselected].song, () => {this.songpreview.playMode('restart'); this.songpreview.play(); if (this.mute) this.songpreview.setVolume(0); this.isloadingsong = false; this.canstart = true}, () => {console.log("error loading song")});
-        this.isloadingsong = true;
+        console.log(typeof(this.setlist[this.lastselected].song))
+        if (typeof(this.setlist[this.lastselected].song) === "number") { // for custom songs
+          console.log("custom song")
+          this.songpreview = customsongs[this.setlist[this.lastselected].song];
+          this.songpreview.play();
+        } else {
+          this.songpreview = loadSound(this.setlist[this.lastselected].song, () => {this.songpreview.playMode('restart'); this.songpreview.play(); if (this.mute) this.songpreview.setVolume(0); this.isloadingsong = false; this.canstart = true}, () => {console.log("error loading song")});
+          this.isloadingsong = true;
+        }
       }
       this.needstomove = true;
     }
@@ -182,9 +189,10 @@ class Menu {
       } else {
         console.log("upload song")
         onmenu = false;
-        startbpmmode = true;
+        startcustomsongmenu = true;
         insettings = false;
-        // TODO: Complete this
+        wasonsettings = false;
+        this.songpreview.stop();
       }
     }
   }
