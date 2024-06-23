@@ -13,8 +13,8 @@ let transitionstartframe = 0
 let setlist = []
 
 // settings
-let particles = true
-let soundeffects = true
+let useparticles = true
+let usesoundeffects = true
 let wasonsettings = false
 
 function onSoundLoadError(e){
@@ -53,8 +53,6 @@ function setup() {
   setlist.push(new SetlistItem("assets/songs/DragonForce - Through the Fire and Flames.mp3", 200, "Through the Fire and Flames", "DragonForce", "Expert"))
   setlist.push(new SetlistItem("assets/songs/xi - Freedom Dive.mp3", 222.22, "Freedom Dive (Expert)", "xi", "Expert"))  
   menu = new Menu(setlist)
-
-  // TODO: find out valid screen size
 }
 
 function draw() {

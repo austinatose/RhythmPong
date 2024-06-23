@@ -192,7 +192,6 @@ class Menu {
   checkSettings() {
     if (mouseX > 0 && mouseX < 50 && mouseY > windowHeight - 50 && mouseY < windowHeight && mouseIsPressed && !this.mousewaspressed) {
       console.log("settings")
-      // TODO: settings implementation here
       this.mousewaspressed = true;
       insettings = !insettings;
       wasonsettings = true;

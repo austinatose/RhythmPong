@@ -1,19 +1,18 @@
 // make feature to turn off in game sounds
 // turn off particles
-// TODO: How to pass settings to all places that need to check it
 
 class Settings {
   constructor() {
     this.soundcheckbox = createCheckbox('', true)
     
     this.soundcheckbox.changed(() => {
-      settings.sound = !settings.sound
+      usesoundeffects = !usesoundeffects
     })
     this.soundcheckbox.hide()
     this.particlescheckbox = createCheckbox('', true)
     
     this.particlescheckbox.changed(() => {
-      settings.particles = !settings.particles
+      useparticles = !useparticles
     })
     this.particlescheckbox.hide()
   }
@@ -32,10 +31,11 @@ class Settings {
 
     push()
     fill(0)
-    textFont(regfont)
+    textFont(boldfont)
     textSize(30)
     textAlign(CENTER)
     text("Settings", windowWidth / 2, 140)
+    textFont(regfont)
     textSize(20)
     text("Sound Effects", windowWidth / 2 - 20, 215)
     text("Particles", windowWidth / 2 - 20, 245)
@@ -45,15 +45,21 @@ class Settings {
     push()
     fill(255)
     strokeWeight(5)
-    rect(windowWidth / 2, 500, 200, 50, 10)
+    rectMode(CENTER)
+    rect(windowWidth / 2, 450, 150, 50, 10)
     pop()
     push()
     fill(0)
-    textFont(regfont)
+    textFont(boldfont)
     textSize(30)
     textAlign(CENTER)
-    text("Close", windowWidth / 2, 505)
+    text("Close", windowWidth / 2, 460)
     pop()
+
+    if (mouseIsPressed && mouseX > windowWidth / 2 - 75 && mouseX < windowWidth / 2 + 75 && mouseY > 425 && mouseY < 475) {
+      insettings = false
+      wasonsettings = true
+    }
   }
 
   hide() {

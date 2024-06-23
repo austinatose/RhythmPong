@@ -148,7 +148,7 @@ class Game {
     }
     // return
     if (this.ball.pos.x < this.paddle.x + 30 && this.ball.pos.x > this.paddle.x - 30 && this.ball.pos.y < this.paddle.y + 30 && this.ball.pos.y > this.paddle.y - 30 && !this.hit && this.paddle.y > windowHeight/2) { // collided
-      // hitsound1.play()
+      if (usesoundeffects) hitsound1.play()
       this.distance = dist(this.ball.pos.x, this.ball.pos.y, this.targetloc.x, this.targetloc.y)
       console.log("hit", this.distance)
       this.targetloc.y = windowHeight / 2 - 310
@@ -167,7 +167,7 @@ class Game {
         this.combo++;
       } else {
         this.combo = 0;
-        misscombo.play()
+        if (usesoundeffects) misscombo.play()
       }
       this.score += Math.round((300 - this.distance) * (1 + this.combo/50)) // each combo gives 2% score boost
 
@@ -202,7 +202,6 @@ class Game {
   // }
 
   checkhit() {
-    // ound1.play()
     console.log("checkhit")
     if (this.hit) {
       this.ball = new Ball(this.targetloc.x, windowHeight / 2 - 310, this.interval)
@@ -214,7 +213,7 @@ class Game {
       this.opponent.x = windowWidth / 2 - 120
       this.missedlasttime = true
       this.combo = 0
-      misscombo.play()
+      if (usesoundeffects) misscombo.play()
       console.log("missed in checkhit")
     }
     // hit effect
@@ -222,6 +221,7 @@ class Game {
     this.hiteffect.x = this.ball.pos.x
     this.hiteffect.y = this.ball.pos.y
     this.hiteffect.particles = []
+    if (usesoundeffects) hitsound1.play()
 
     this.init = true
     this.ballmovingtowardsplayer = false

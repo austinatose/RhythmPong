@@ -7,7 +7,7 @@ class Fire {
   }
 
   render() {
-    if (settings.particles) {
+    if (useparticles) {
       for (let i = 0; i < this.dramaticness; i++) {
         this.particles.push(new FireParticle(this.x, this.y));
       }
@@ -45,11 +45,13 @@ class FireParticle {
   }
 
   show() {
-    push()
-    noStroke();
-    fill(random(200,230), random(50, 150), 10, this.alpha);
-    ellipse(this.x, this.y, this.d);
-    pop()
+    if (useparticles) {
+      push()
+      noStroke();
+      fill(random(200,230), random(50, 150), 10, this.alpha);
+      ellipse(this.x, this.y, this.d);
+      pop()
+    }
   }
 }
 
@@ -63,15 +65,17 @@ class HitEffect {
   }
 
   render() {
-    for (let i = 0; i < 2; i++) {
-      this.particles.push(new HitParticle(this.x, this.y, this.vx, this.vy));
-    }
-
-    for (let i = this.particles.length - 1; i >= 0; i--) {
-      this.particles[i].update();
-      this.particles[i].show();
-      if (this.particles[i].finished()) {
-        this.particles.splice(i, 1);
+    if (useparticles) {
+      for (let i = 0; i < 2; i++) {
+        this.particles.push(new HitParticle(this.x, this.y, this.vx, this.vy));
+      }
+  
+      for (let i = this.particles.length - 1; i >= 0; i--) {
+        this.particles[i].update();
+        this.particles[i].show();
+        if (this.particles[i].finished()) {
+          this.particles.splice(i, 1);
+        }
       }
     }
   }
@@ -99,10 +103,13 @@ class HitParticle {
   }
 
   show() {
-    push()
-    noStroke();
-    fill(255, 255, 255, this.alpha);
-    ellipse(this.x, this.y, this.d);
-    pop()
+    if (useparticles) {
+      console.log(useparticles)
+      push()
+      noStroke();
+      fill(255, 255, 255, this.alpha);
+      ellipse(this.x, this.y, this.d);
+      pop()
+    }
   }
 }
