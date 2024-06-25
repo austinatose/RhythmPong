@@ -91,16 +91,6 @@ class Menu {
     if (frameCount - this.delaystartframe > 30) {
       this.delay = false;
     }
-
-    if (this.isloadingsong) {
-      push()
-      textSize(50)
-      textAlign(CENTER)
-      textFont(regfont)
-      text("Loading song...", windowWidth/2, windowHeight/2)
-      this.canstart = false;
-      pop()
-    }
     
     // square on bottom left for settings and mute
     push()
@@ -168,6 +158,17 @@ class Menu {
       text("Upload your own song!", windowWidth * 3/4 + 50, windowHeight/2)
       pop()
     }
+
+    if (this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem) this.songpreview.stop();
+    if (this.isloadingsong) {
+      push()
+      textSize(50)
+      textAlign(CENTER)
+      textFont(regfont)
+      text("Loading song...", windowWidth/2, windowHeight/2)
+      this.canstart = false;
+      pop()
+    }
   }
 
   checkforplay() {
@@ -178,21 +179,19 @@ class Menu {
         // console.log("play")
         startgamesound.play();
         // startgame = true;
-        // onmenu = false;
+        onmenu = false;
         // transitioning = true;
         // transitionstartframe = frameCount;
         selecteditem = setlist[this.lastselected];
         if (!(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)) song = loadSound(selecteditem.song, onSoundLoadSuccess_game, onSoundLoadError)
         console.log("start game with song: " + selecteditem.song)
         // titleentrysound.play()
-        background(0)
       } else {
         console.log("upload song")
         onmenu = false;
         startcustomsongmenu = true;
         insettings = false;
         wasonsettings = false;
-        this.songpreview.stop();
       }
     }
   }

@@ -7,6 +7,7 @@ class CustomSongMenu {
   }
 
   render() {
+    this.upload.show();
     this.upload.position(windowWidth / 2 - 100, 100);
   }
 
@@ -54,5 +55,7 @@ class CustomSongMenu {
     console.log(customsongs);
     onmenu = true;
     startcustomsongmenu = false;
+    this.upload.hide();
+    console.log("Hiding custom song menu");
   }
 }

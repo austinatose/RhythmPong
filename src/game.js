@@ -31,6 +31,9 @@ class Game {
     this.elapsedbeats = 1
     this.timerstarttime = 0
     this.timerhelper = null
+    this.countdownhelper = null
+
+    this.isreset = false
 
     this.song = song
   }
@@ -39,10 +42,10 @@ class Game {
     if (this.entry) {
       this.entry = false
       this.song.play()
-      this.song.onended(this.handleEnd.bind(this));
+      this.song.onended(() => {if (!this.isreset) this.handleEnd()})
       this.countingdown = true
       setTimeout(() => {this.startgame = true}, this.interval * 4 * 1000)
-      setInterval(() => {this.countdownbeat--}, this.interval * 1000)
+      this.countdownhelper = setInterval(() => {this.countdownbeat--}, this.interval * 1000)
     }
     if (this.countingdown) {
       this.countdown()
@@ -102,6 +105,8 @@ class Game {
     this.opponent.render()
 
     // this.screenShake()
+
+    this.isreset = false
 
     push()
     textSize(50)
@@ -192,6 +197,10 @@ class Game {
       this.hiteffect.vy = this.ball.vel.y
       this.hiteffect.render()
     }
+
+    // TODO: Insert more juiciness for combos
+
+    this.renderRestartButton()
   }
 
   // screenShake() {
@@ -249,6 +258,54 @@ class Game {
         this.song = null
         onmenu = true
         startgame = false
+      }
+    }
+  }
+
+  renderRestartButton() {
+    push()
+    strokeWeight(5)
+    rect(0, windowHeight - 50, 50, 50, 5)
+    // image(settingsicon, 5, windowHeight - 45, 40, 40)
+
+    if (mouseX > 0 && mouseX < 50 && mouseY > windowHeight - 50 && mouseY < windowHeight) {
+      if (mouseIsPressed) {
+        this.song.stop()
+
+        // reconstruct
+        this.ball = new Ball(windowWidth / 2 - 120, windowHeight / 2 - 310)
+        this.table = new Table(createVector(windowWidth / 2, windowHeight / 2)) // unfortunately resize doesn't really work here because the position is too sensitive
+        this.paddle = new Paddle()
+        this.fireeffect = new Fire(100, 150)
+        this.hiteffect = new HitEffect(100, 150)
+        this.hiteffectrendertime = 0
+        this.opponent = new Opponent()
+        this.targetloc = createVector()
+        this.init = true;
+        this.startframe = frameCount;
+        this.hit = false;
+        this.missedlasttime = false;
+        this.ballmovingtowardsplayer = true;
+        this.score = 0;
+        this.distance = 10000
+        this.combo = 0
+        this.entry = true
+        this.firststart = true
+        this.startgame = false
+        this.endgame = false
+        this.countingdown = false
+        this.countdownbeat = 4
+
+        this.isreset = true
+
+        this.elapsedbeats = 1
+        this.timerstarttime = 0
+
+        clearInterval(this.timerhelper)
+        clearInterval(this.countdownhelper)
+
+        this.timerhelper = null
+        this.countdownhelper = null
       }
     }
   }
