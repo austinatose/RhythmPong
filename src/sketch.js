@@ -35,6 +35,7 @@ function preload() {
   settingsicon = loadImage('assets/images/settings-icon.png')
   unmuteicon = loadImage('assets/images/speaker.png')
   muteicon = loadImage('assets/images/speaker.slash.png')
+  reseticon = loadImage('assets/images/arrow.circlepath.png')
   misscombo.setVolume(0.5)
 }
 

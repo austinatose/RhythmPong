@@ -42,7 +42,6 @@ class Game {
     if (this.entry) {
       this.entry = false
       this.song.play()
-      this.song.onended(() => {if (!this.isreset) this.handleEnd()})
       this.countingdown = true
       setTimeout(() => {this.startgame = true}, this.interval * 4 * 1000)
       this.countdownhelper = setInterval(() => {this.countdownbeat--}, this.interval * 1000)
@@ -50,8 +49,9 @@ class Game {
     if (this.countingdown) {
       this.countdown()
     }
-    console.log(this.startgame, this.endgame)
+    // console.log(this.startgame, this.endgame)
     if (this.startgame) {
+      this.song.onended(() => {if (!this.isreset) {console.log("SONG ENDED"); this.handleEnd()}})
       this.countingdown = false
       if (this.firststart) {
         this.timerstarttime = window.performance.now()
@@ -266,7 +266,7 @@ class Game {
     push()
     strokeWeight(5)
     rect(0, windowHeight - 50, 50, 50, 5)
-    // image(settingsicon, 5, windowHeight - 45, 40, 40)
+    image(reseticon, 3, windowHeight - 43, 40, 37)
 
     if (mouseX > 0 && mouseX < 50 && mouseY > windowHeight - 50 && mouseY < windowHeight) {
       if (mouseIsPressed) {

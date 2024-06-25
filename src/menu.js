@@ -183,8 +183,15 @@ class Menu {
         // transitioning = true;
         // transitionstartframe = frameCount;
         selecteditem = setlist[this.lastselected];
-        if (!(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)) song = loadSound(selecteditem.song, onSoundLoadSuccess_game, onSoundLoadError)
-        console.log("start game with song: " + selecteditem.song)
+
+        if (typeof(selecteditem.song) == "number") {
+          song = customsongs[selecteditem.song]
+          console.log("start game with custom song: " + selecteditem.name)
+          onSoundLoadSuccess_game();
+        } else {
+          if (!(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)) song = loadSound(selecteditem.song, onSoundLoadSuccess_game, onSoundLoadError)
+          console.log("start game with song: " + selecteditem.song)
+        }
         // titleentrysound.play()
       } else {
         console.log("upload song")
