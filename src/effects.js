@@ -55,6 +55,8 @@ class FireParticle {
   }
 }
 
+// TODO: Why does this look weird in demo
+
 class HitEffect {
   constructor(x, y, vx, vy) {
     this.particles = [];
@@ -92,7 +94,7 @@ class HitParticle {
   }
 
   finished() {
-    return this.alpha < 0;
+    return this.alpha <= 0;
   }
 
   update() {

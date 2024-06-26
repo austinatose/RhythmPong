@@ -15,13 +15,20 @@ class Settings {
       useparticles = !useparticles
     })
     this.particlescheckbox.hide()
+    this.trailcheckbox = createCheckbox('', true)
+    this.trailcheckbox.changed(() => {
+      usetrail = !usetrail
+    })
+    this.trailcheckbox.hide()
   }
 
   render() {
     this.soundcheckbox.position(windowWidth / 2 + 60, 200)
     this.particlescheckbox.position(windowWidth / 2 + 60, 230)
+    this.trailcheckbox.position(windowWidth / 2 + 60, 260)
     this.soundcheckbox.show()
     this.particlescheckbox.show()
+    this.trailcheckbox.show()
 
     push()
     fill(255)
@@ -39,6 +46,9 @@ class Settings {
     textSize(20)
     text("Sound Effects", windowWidth / 2 - 20, 215)
     text("Particles", windowWidth / 2 - 20, 245)
+    text("Trail", windowWidth / 2 - 20, 275)
+    text("Version 1.0.0", windowWidth / 2, 370)
+    text("© 2024 Austin Liu", windowWidth / 2, 390)
     pop()
 
     // close button at bottom of settings
@@ -65,5 +75,6 @@ class Settings {
   hide() {
     this.soundcheckbox.hide()
     this.particlescheckbox.hide()
+    this.trailcheckbox.hide()
   }
 }

@@ -201,6 +201,7 @@ class Game {
     // TODO: Insert more juiciness for combos
 
     this.renderRestartButton()
+    this.renderExitButton()
   }
 
   // screenShake() {
@@ -274,7 +275,7 @@ class Game {
 
         // reconstruct
         this.ball = new Ball(windowWidth / 2 - 120, windowHeight / 2 - 310)
-        this.table = new Table(createVector(windowWidth / 2, windowHeight / 2)) // unfortunately resize doesn't really work here because the position is too sensitive
+        this.table = new Table(createVector(windowWidth / 2, windowHeight / 2))
         this.paddle = new Paddle()
         this.fireeffect = new Fire(100, 150)
         this.hiteffect = new HitEffect(100, 150)
@@ -306,6 +307,19 @@ class Game {
 
         this.timerhelper = null
         this.countdownhelper = null
+      }
+    }
+  }
+
+  renderExitButton() {
+    push()
+    strokeWeight(5)
+    rect(50, windowHeight - 50, 50, 50, 5)
+    image(exiticon, 53, windowHeight - 43, 40, 37)
+
+    if (mouseX > 50 && mouseX < 100 && mouseY > windowHeight - 50 && mouseY < windowHeight) {
+      if (mouseIsPressed) {
+        this.song.stop()
       }
     }
   }

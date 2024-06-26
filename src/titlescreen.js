@@ -10,7 +10,6 @@ class TitleScreen {
   }
 
   render() {
-    // TODO: title is way too big, maybe adapt for screen sizes
     background(220)
     translate(0, -70)
     scale(this.diff)

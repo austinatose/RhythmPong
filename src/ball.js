@@ -4,6 +4,7 @@ class Ball {
     this.vel = createVector(50, 50)
     this.contactpoint = createVector()
     this.size = 20
+    this.trail = new Trail()
   }
 
   render() {
@@ -13,7 +14,10 @@ class Ball {
     ellipse(this.pos.x, this.pos.y, this.size, this.size)
     pop()
 
-    // TODO: trail
+    if (usetrail) {
+      this.trail.render(this.pos.x, this.pos.y)
+      this.trail.addParticle() // trail literally cannot generate any faster
+    }
   }
 
   determineVelocity(target, interval) {
@@ -38,5 +42,48 @@ class Ball {
     this.pos.add(this.vel)
      // ellipse(this.contactpoint.x, this.contactpoint.y, 10)
     this.size = dist(this.pos.x, this.pos.y, this.contactpoint.x, this.contactpoint.y) / 50 + 20
+  }
+}
+
+class Trail {
+  constructor() {
+    this.particles = []
+    this.pos = createVector(0, 0)
+  }
+
+  render(x, y) {
+    this.pos.x = x
+    this.pos.y = y
+    for (let particle of this.particles) {
+      particle.render(this.pos.x, this.pos.y)
+    }
+  }
+
+  addParticle() {
+    this.particles.push(new TrailParticle(this.pos.x, this.pos.y))
+    for (let particle of this.particles) {
+      if (particle.size <= 0)
+        this.particles.splice(this.particles.indexOf(particle), 1)
+    }
+  }
+}
+
+class TrailParticle {
+  constructor(x, y) {
+    this.pos = createVector(x, y)
+    this.size = 10
+  }
+
+  render() {
+    push()
+    noStroke()
+    fill(255)
+    ellipse(this.pos.x, this.pos.y, this.size, this.size)
+    pop()
+
+    this.size--;
+    if (this.size < 0) {
+      this.size = 0
+    }
   }
 }

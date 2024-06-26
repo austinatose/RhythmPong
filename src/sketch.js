@@ -16,6 +16,7 @@ let customsongs = []
 // settings
 let useparticles = true
 let usesoundeffects = true
+let usetrail = true
 let wasonsettings = false
 
 function onSoundLoadError(e){
@@ -36,6 +37,7 @@ function preload() {
   unmuteicon = loadImage('assets/images/speaker.png')
   muteicon = loadImage('assets/images/speaker.slash.png')
   reseticon = loadImage('assets/images/arrow.circlepath.png')
+  exiticon = loadImage('assets/images/rectangle.portrait.and.arrow.right.png')
   misscombo.setVolume(0.5)
 }
 
@@ -62,8 +64,9 @@ function draw() {
   resizeCanvas(windowWidth, windowHeight)
   frameRate(60)
   background(220)
-  let debug = true
-  if (windowWidth < 1267 || windowHeight < 903 && debug == false) {
+  let debug = false
+  // let debug = true
+  if ((windowWidth < 1267 || windowHeight < 903) && debug == false) {
     alert("Your screen size is too small! Please try resizing your window or zooming out.")
   }
   // translate(windowWidth / 2 - windowWidth / 1.3 / 2, windowHeight / 2 - windowHeight / 1.3 / 2)
@@ -88,8 +91,10 @@ function draw() {
   // debug
   // console.log(frameRate())
   // console.log(mouseX, mouseY)
-  text("FPS: " + frameRate().toFixed(2), 10, 10)
-  text("Canvas size: " + windowWidth + "x" + windowHeight, 10, 30)
+  if (debug) {
+    text("FPS: " + frameRate().toFixed(2), 10, 10)
+    text("Canvas size: " + windowWidth + "x" + windowHeight, 10, 30)
+  }
 
   if (wasonsettings && !insettings) {
     settings.hide()

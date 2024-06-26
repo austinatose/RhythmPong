@@ -24,6 +24,9 @@ class Demo {
     this.movingtowards1 = true
     this.targetloc = createVector()
     this.init = true
+
+    this.hiteffect = new HitEffect(0, 0)
+    this.hiteffectrendertime = 0
   }
 
   render() {
@@ -62,6 +65,8 @@ class Demo {
       this.ball.determineVelocity(this.targetloc, (this.interval * 60 * 2 - frameCount + this.startframe) / 60)
       this.movingtowards1 = false
       this.startframe = frameCount
+      this.hiteffectrendertime = 10
+      this.hiteffect.render()
       // console.log(this.targetloc, this.ball.pos, this.ball.vel)
     } else if (this.ball.pos.x < this.opponent2.x + 30 && this.ball.pos.x > this.opponent2.x - 30 && this.ball.pos.y < this.opponent2.y + 30 && this.ball.pos.y > this.opponent2.y - 30) { // collided with 2
       // console.log("collided with 2")
@@ -70,6 +75,16 @@ class Demo {
       this.ball.determineVelocity(this.targetloc, (this.interval * 60 * 2 - frameCount + this.startframe) / 60)
       this.movingtowards1 = true
       this.startframe = frameCount
+      this.hiteffectrendertime = 10
+    }
+
+    if (this.hiteffectrendertime > 0) {
+      this.hiteffectrendertime--
+      this.hiteffect.x = this.ball.pos.x
+      this.hiteffect.y = this.ball.pos.y
+      this.hiteffect.vx = this.ball.vel.x
+      this.hiteffect.vy = this.ball.vel.y
+      this.hiteffect.render()
     }
 
     this.ball.move()

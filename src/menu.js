@@ -8,7 +8,7 @@ class Menu {
     this.newlastselected = 0;
     this.delay = false; // delay instead of straight up blocking mouse holding action
     this.delaystartframe = 0;
-    this.songpreview = null;
+    this.songpreview = null; // TODO: Fix double song playing when loading in too fast
     this.isloadingsong = false;
     this.needstomove = true;
     this.canstart = true;
@@ -149,7 +149,7 @@ class Menu {
     // err
     this.demo.opponent2.rotoffset = -PI/2
     this.demo.opponent2.invert = false
-    if (!(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)) this.demo.render();
+    if (!(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)) this.demo.render(); // TODO: This breaks briefly when exiting a game
     else {
       push()
       textSize(50)
