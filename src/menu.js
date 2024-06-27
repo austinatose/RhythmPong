@@ -11,7 +11,7 @@ class Menu {
     this.songpreview = null; // TODO: Fix double song playing when loading in too fast
     this.isloadingsong = false;
     this.needstomove = true;
-    this.canstart = true;
+    this.canstart = false;
     this.activemuteicon = unmuteicon;
     this.mute = false;
     this.mousewaspressed = false;

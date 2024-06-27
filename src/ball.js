@@ -71,7 +71,7 @@ class Trail {
 class TrailParticle {
   constructor(x, y) {
     this.pos = createVector(x, y)
-    this.size = 10
+    this.size = 15
   }
 
   render() {
