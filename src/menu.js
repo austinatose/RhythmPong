@@ -8,7 +8,7 @@ class Menu {
     this.newlastselected = 0;
     this.delay = false; // delay instead of straight up blocking mouse holding action
     this.delaystartframe = 0;
-    this.songpreview = null; // TODO: Fix double song playing when loading in too fast
+    this.songpreview = null; 
     this.isloadingsong = false;
     this.needstomove = true;
     this.canstart = false;
@@ -22,7 +22,6 @@ class Menu {
     if (this.init) {
       this.demo = new Demo(windowWidth * 3/4 + 50, windowHeight/2, 0.5);
       for (let i = 0; i < this.setlist.length; i++) {
-        // TODO: Make sizes adaptive for different screen sizes
         this.menuitems.push(new MenuItem(createVector(-75, windowHeight/2 - 400 + i * 150), this.setlist[i].song, this.setlist[i].bpm, this.setlist[i].name, this.setlist[i].artist, this.setlist[i].difficulty));
       }
       this.menuitems.push(new CustomSongInterfaceMenuItem(createVector(-75, windowHeight/2 - 400 + this.setlist.length * 150)));
@@ -149,7 +148,7 @@ class Menu {
     // err
     this.demo.opponent2.rotoffset = -PI/2
     this.demo.opponent2.invert = false
-    if (!(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)) this.demo.render(); // TODO: This breaks briefly when exiting a game
+    if (!(this.menuitems[this.lastselected] instanceof CustomSongInterfaceMenuItem)) this.demo.render(); // WONTFIX: This breaks briefly when exiting a game
     else {
       push()
       textSize(50)

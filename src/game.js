@@ -9,6 +9,7 @@ class Game {
     this.paddle = new Paddle()
     this.fireeffect = new Fire(100, 150)
     this.hiteffect = new HitEffect(100, 150)
+    this.rainboweffect = new RainbowEffect(100, 150)
     this.hiteffectrendertime = 0
     this.opponent = new Opponent()
     this.targetloc = createVector()
@@ -26,6 +27,7 @@ class Game {
     this.endgame = false
     this.countingdown = false
     this.countdownbeat = 4
+    this.rainboweffectrendertime = 0
     textFont(regfont)
 
     this.elapsedbeats = 1
@@ -118,7 +120,7 @@ class Game {
       text("Missed", 100, 150)
     } else if (this.distance < 25) {
       fill('green')
-      text("Perfect", 100, 150) // TODO: generate particles when perfect (or all the time)
+      text("Perfect", 100, 150)
     } else if (this.distance < 60) {
       fill('green')
       text("Good", 100, 150)
@@ -139,8 +141,6 @@ class Game {
       this.fireeffect.render()
       pop()
     }
-
-    // TODO: First ball doesn't return
 
     if (this.init) {
       this.startframe = frameCount
@@ -165,6 +165,10 @@ class Game {
       this.missedlasttime = false
       this.ballmovingtowardsplayer = true
       if (this.distance < 25) {
+        this.rainboweffectrendertime = 10
+        this.rainboweffect.x = this.ball.pos.x
+        this.rainboweffect.y = this.ball.pos.y
+        this.rainboweffect.particles = []
         this.combo++;
       } else if (this.distance < 60) {
         this.combo++;
@@ -198,7 +202,14 @@ class Game {
       this.hiteffect.render()
     }
 
-    // TODO: Insert more juiciness for combos
+    if (this.rainboweffectrendertime > 0) {
+      this.rainboweffectrendertime--
+      this.rainboweffect.x = this.ball.pos.x
+      this.rainboweffect.y = this.ball.pos.y
+      this.rainboweffect.vx = this.ball.vel.x
+      this.rainboweffect.vy = this.ball.vel.y
+      this.rainboweffect.render()
+    }
 
     this.renderRestartButton()
     this.renderExitButton()
@@ -250,7 +261,6 @@ class Game {
     line(windowWidth / 2 - 170, windowHeight / 2 + 220, windowWidth / 2 + 170, windowHeight / 2 + 220)
     pop()
 
-    // TODO: back to menu
     cursor(ARROW)
     if (mouseX > windowWidth / 2 - 170 && mouseX < windowWidth / 2 + 170 && mouseY > windowHeight / 2 + 180 && mouseY < windowHeight / 2 + 220) {
       cursor(HAND) // could change this
