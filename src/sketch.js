@@ -55,7 +55,6 @@ function setup() {
   setlist.push(new SetlistItem("assets/songs/TonightEN_RhythmHeavenFever.mp3", 145, "Tonight (From Rhythm Heaven Fever)", "Tsunku", "Normal"))
   setlist.push(new SetlistItem("assets/songs/Siromaru - Conflict.mp3", 160, "Conflict", "Siromaru", "Hard"))
   setlist.push(new SetlistItem("assets/songs/Hatsune Miku - Mythologia's End.mp3", 195, "Mythologia's End", "Hatsune Miku", "Hard"))
-  setlist.push(new SetlistItem("assets/songs/DragonForce - Through the Fire and Flames.mp3", 200, "Through the Fire and Flames", "DragonForce", "Expert"))
   setlist.push(new SetlistItem("assets/songs/xi - Freedom Dive.mp3", 222.22, "Freedom Dive (Expert)", "xi", "Expert"))  
   menu = new Menu(setlist)
 }
