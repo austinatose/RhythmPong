@@ -1,6 +1,7 @@
 class CustomSongMenu {
   constructor() {
     this.upload = createFileInput(this.handleFile.bind(this));
+    this.upload.hide();
     this.bpminput = createInput();
     this.bpminput.position(windowWidth / 2 - 200, 200);
     this.bpminput.size(400, 40);
